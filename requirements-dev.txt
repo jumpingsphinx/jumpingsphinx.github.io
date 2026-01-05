@@ -1,0 +1,21 @@
+-r requirements.txt
+
+# Documentation
+mkdocs>=1.5.0
+mkdocs-material>=9.5.0
+mkdocs-jupyter>=0.24.0
+pymdown-extensions>=10.0
+mkdocs-git-revision-date-localized-plugin>=1.2.0
+
+# Testing
+pytest>=7.3.0
+pytest-cov>=4.1.0
+
+# Code quality
+black>=23.3.0
+flake8>=6.0.0
+isort>=5.12.0
+
+# Notebook utilities
+nbconvert>=7.4.0
+nbformat>=5.8.0
