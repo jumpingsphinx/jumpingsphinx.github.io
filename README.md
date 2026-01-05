@@ -4,7 +4,7 @@ A comprehensive, hands-on course for learning machine learning from the ground u
 
 ## Documentation
 
-Visit our [documentation site](https://jumpingsphinx.github.io/ML101/) for the complete learning experience.
+Visit our [documentation site](https://jumpingsphinx.github.io/) for the complete learning experience.
 
 ## Course Structure
 
@@ -62,7 +62,7 @@ Build neural networks from scratch and with PyTorch:
    ```
 
 5. **Start learning!**
-   - Read the lessons on our [documentation site](https://jumpingsphinx.github.io/ML101/)
+   - Read the lessons on our [documentation site](https://jumpingsphinx.github.io/)
    - Complete the exercises in the `notebooks/` directory
    - Check your solutions against the provided solution notebooks
 

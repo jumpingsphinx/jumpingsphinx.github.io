@@ -1,7 +1,7 @@
 site_name: ML101 - Machine Learning Fundamentals
 site_description: A comprehensive, hands-on guide to machine learning fundamentals
 site_author: ML101 Contributors
-site_url: https://jumpingsphinx.github.io/ML101/
+site_url: https://jumpingsphinx.github.io/
 
 repo_name: jumpingsphinx/ML101
 repo_url: https://github.com/jumpingsphinx/ML101
