@@ -2,7 +2,66 @@
 
 This guide will help you set up your environment and get ready to start learning machine learning fundamentals.
 
-## System Requirements
+## Choose Your Learning Path
+
+ML101 offers **three ways to learn**, designed for different needs and skill levels:
+
+### 🌐 Path 1: Browser-Only (Recommended for Beginners)
+
+**Best for:** Complete beginners, quick start, no installation hassles
+
+**What you get:**
+- ✅ Start learning immediately - zero setup required
+- ✅ Run Python code directly in your browser
+- ✅ Use Google Colab for exercises (free cloud notebooks with GPU)
+- ✅ Works on any device (Windows, Mac, Linux, even Chromebooks!)
+
+**How it works:**
+1. Browse the lessons on this website
+2. Click "▶ Run Code" buttons to execute examples in your browser
+3. Click "Open in Colab" badges in exercises to complete them in the cloud
+4. No installation, no configuration needed!
+
+[Start Learning Now](module1-linear-algebra/index.md){ .md-button .md-button--primary }
+
+---
+
+### 💻 Path 2: Hybrid (Balance of Convenience and Control)
+
+**Best for:** Learners who want both browser interactivity and local development
+
+**What you get:**
+- ✅ Interactive code examples in browser (like Path 1)
+- ✅ Local Jupyter Lab for deeper exploration
+- ✅ Full control over your environment
+- ✅ Work offline once set up
+
+**Setup:** Follow the [Local Installation](#local-installation-paths-2-3) instructions below.
+
+---
+
+### 🔧 Path 3: Fully Local (Maximum Control)
+
+**Best for:** Advanced users, offline work, custom environments
+
+**What you get:**
+- ✅ Complete local development environment
+- ✅ No dependency on cloud services
+- ✅ Full customization of tools and libraries
+- ✅ Best performance for large experiments
+
+**Setup:** Follow the [Local Installation](#local-installation-paths-2-3) instructions below.
+
+---
+
+!!! tip "Not sure which path to choose?"
+    **Start with Path 1 (Browser-Only)!** You can always switch to local development later. Many learners complete the entire course using just their browser and Colab.
+
+## Local Installation (Paths 2 & 3)
+
+If you chose **Path 2 (Hybrid)** or **Path 3 (Fully Local)**, follow these installation steps:
+
+### System Requirements
 
 ### Minimum Requirements
 - **Operating System:** Windows 10/11, macOS 10.14+, or Linux
@@ -213,20 +272,32 @@ If you encounter memory errors:
 - Work with smaller datasets initially
 - Consider using Google Colab (free cloud notebooks)
 
-## Alternative: Google Colab
+## Using Google Colab (Path 1 & 2)
 
-If you can't install locally, use Google Colab (free cloud notebooks with GPU access):
+Google Colab provides free cloud notebooks with GPU access - perfect for running exercises without local installation.
 
-1. Visit [Google Colab](https://colab.research.google.com/)
-2. File → Upload notebook
-3. Upload exercise notebooks from the ML101 repository
-4. Install dependencies in a code cell:
-   ```python
-   !pip install xgboost
-   ```
+### Quick Start with Colab
 
-!!! info "Colab Note"
-    Most dependencies (NumPy, pandas, scikit-learn) are pre-installed in Colab.
+Every exercise notebook in ML101 has a "Open in Colab" badge at the top. Just click it!
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/ML101/blob/main/notebooks/module1-linear-algebra/exercise1-vectors.ipynb)
+
+**Benefits:**
+- ✅ No installation required
+- ✅ Free GPU access (helpful for Module 4)
+- ✅ Pre-installed ML libraries (NumPy, pandas, scikit-learn, matplotlib)
+- ✅ Save your work to Google Drive
+- ✅ Share notebooks easily
+
+**Additional Setup (if needed):**
+
+Some exercises may require XGBoost (Module 3). Install it in a Colab cell:
+```python
+!pip install xgboost
+```
+
+!!! tip "Colab Tip"
+    Sign in with your Google account to save your work. Your notebooks will be saved in Google Drive under "Colab Notebooks".
 
 ## Development Dependencies (Optional)
 
