@@ -44,23 +44,31 @@ v = np.array([v1, v2, ..., vn])
 
 ## Creating Vectors in NumPy
 
+!!! tip "Try It Yourself"
+    Click the **▶ Run Code** button below to execute Python code directly in your browser - no installation needed!
+
+<div class="python-interactive" markdown="1">
 ```python
 import numpy as np
 
 # Create a vector
 v = np.array([1, 2, 3, 4])
-print(v)  # [1 2 3 4]
-print(v.shape)  # (4,)
+print(f"Vector: {v}")
+print(f"Shape: {v.shape}")
 
 # Create a column vector (2D array)
 v_col = np.array([[1], [2], [3], [4]])
-print(v_col.shape)  # (4, 1)
+print(f"\nColumn vector shape: {v_col.shape}")
 
 # Create specific vectors
-zeros = np.zeros(5)      # [0, 0, 0, 0, 0]
-ones = np.ones(3)        # [1, 1, 1]
-random = np.random.rand(4)  # Random values between 0 and 1
+zeros = np.zeros(5)
+ones = np.ones(3)
+print(f"\nZeros: {zeros}")
+print(f"Ones: {ones}")
 ```
+</div>
+
+**Try modifying the code:** Change the numbers in the vector and run it again!
 
 !!! tip "1D vs 2D Arrays"
     In NumPy, `np.array([1, 2, 3])` creates a 1D array with shape `(3,)`, while `np.array([[1], [2], [3]])` creates a 2D column vector with shape `(3, 1)`. Both work for most operations, but be aware of the difference.
