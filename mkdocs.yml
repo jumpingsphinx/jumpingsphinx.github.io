@@ -77,8 +77,18 @@ markdown_extensions:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
+extra:
+  version:
+    provider: mike
+    default: v1.0
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/jumpingsphinx/jumpingsphinx.github.io
+
 extra_css:
   - assets/stylesheets/code-runner.css
+  - assets/stylesheets/version-banner.css
 
 extra_javascript:
   - https://polyfill.io/v3/polyfill.min.js?features=es6
