@@ -1,6 +1,6 @@
 # ML101 - Machine Learning Fundamentals
 
-> **Learn machine learning entirely in your browser - no installation required!**
+> **Learn machine learning entirely in y our browser - no installation required!**
 
 [![Documentation](https://img.shields.io/badge/docs-live-brightgreen)](https://jumpingsphinx.github.io/)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module1-linear-algebra/exercise1-vectors.ipynb)
