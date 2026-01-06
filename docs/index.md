@@ -2,7 +2,41 @@
 
 ## Machine Learning Fundamentals
 
-ML101 is a comprehensive, hands-on course designed to teach you machine learning from the ground up. Whether you're a beginner or looking to solidify your understanding of ML fundamentals, this course provides a structured path through essential concepts, algorithms, and implementations.
+ML101 is a comprehensive, **fully interactive** course designed to teach you machine learning from the ground up. Whether you're a beginner or looking to solidify your understanding of ML fundamentals, this course provides a structured path through essential concepts, algorithms, and implementations.
+
+## ✨ Learn Entirely in Your Browser
+
+**Start coding immediately - no installation required!**
+
+ML101 offers a unique learning experience:
+
+- **🚀 Interactive Code Examples**: Run Python code directly on this website - click "▶ Run Code" to execute
+- **☁️ Cloud-Based Exercises**: One-click access to Google Colab for hands-on practice
+- **💻 Zero Setup**: Works on any device - Windows, Mac, Linux, even Chromebooks
+- **🎓 Progressive Learning**: From guided examples to open-ended challenges
+
+!!! example "Try It Now!"
+    Here's a taste of what you'll learn. Click the **▶ Run Code** button below to execute Python code right in your browser:
+
+<div class="python-interactive" markdown="1">
+```python
+import numpy as np
+
+# Machine Learning in action!
+data = np.array([1, 2, 3, 4, 5])
+mean = np.mean(data)
+std = np.std(data)
+
+print(f"Data: {data}")
+print(f"Mean: {mean}")
+print(f"Standard Deviation: {std:.2f}")
+print("\n✓ This is real Python running in your browser!")
+```
+</div>
+
+**No installation. No configuration. Just learning.**
+
+---
 
 ## What You'll Learn
 
@@ -74,17 +108,17 @@ Build neural networks from scratch and with modern frameworks:
 
 ## How This Course Works
 
-### :material-book-open-variant: Read the Lessons
-Each module contains detailed lesson pages with theory, mathematical explanations, visualizations, and code examples. Take your time to understand the concepts before moving to exercises.
+### :material-play-circle: 1. Interactive Lessons
+Each module contains detailed lesson pages with theory, mathematical explanations, and **runnable code examples**. Click the "▶ Run Code" button to execute Python directly in your browser. No setup required!
 
-### :material-code-braces: Complete the Exercises
-Every module includes hands-on Jupyter notebook exercises. These interactive notebooks let you implement what you've learned and see immediate results.
+### :material-rocket-launch: 2. Cloud-Based Exercises
+Every module includes hands-on Jupyter notebook exercises. Click the "Open in Colab" badge to launch exercises in Google Colab - a free cloud environment with all libraries pre-installed. Just sign in with your Google account and start coding!
 
-### :material-check-circle: Review Solutions
-After attempting the exercises, review the solution notebooks. These include not just the code, but explanations of the approach and alternative solutions.
+### :material-check-circle: 3. Review Solutions
+After attempting exercises, review the solution notebooks. These include not just the code, but explanations of the approach and alternative solutions. Solutions are also available in Colab with one click.
 
-### :material-flask: Experiment and Explore
-Modify parameters, try different datasets, and experiment with variations to deepen your understanding.
+### :material-flask: 4. Experiment and Explore
+Modify parameters, try different datasets, and experiment with variations. All in your browser - save your work to Google Drive and access it anywhere.
 
 ## Prerequisites
 
@@ -93,12 +127,19 @@ Modify parameters, try different datasets, and experiment with variations to dee
 - **Basic mathematics:** High school algebra and basic calculus concepts
 
 ### Technical Requirements
+
+**For Browser-Only Learning (Path 1):**
+- ✅ A modern web browser (Chrome, Firefox, Safari, Edge)
+- ✅ Internet connection
+- ✅ Google account (free) for saving Colab notebooks
+
+**For Local Development (Paths 2 & 3):**
 - Python 3.9 or higher
 - 4GB RAM minimum
 - Code editor or IDE (VS Code, PyCharm, or Jupyter Lab)
 
 !!! tip "New to Python?"
-    Check out our [Python Refresher](resources/python-refresher.md) before starting.
+    Check out our [Python Refresher](resources/python-refresher.md) before starting. You can run all the examples directly in your browser!
 
 ## Course Philosophy
 
