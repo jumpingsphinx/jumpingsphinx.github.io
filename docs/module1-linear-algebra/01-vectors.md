@@ -83,11 +83,18 @@ $$\vec{a} + \vec{b} = \begin{bmatrix} a_1 \\ a_2 \end{bmatrix} + \begin{bmatrix}
 
 **Geometric interpretation:** Place vectors tip-to-tail.
 
+<div class="python-interactive" markdown="1">
 ```python
+import numpy as np
+
 a = np.array([1, 2])
 b = np.array([3, 1])
-c = a + b  # [4, 3]
+c = a + b
+print(f"a = {a}")
+print(f"b = {b}")
+print(f"a + b = {c}")
 ```
+</div>
 
 **ML Application:** Combining features or model updates.
 
@@ -99,10 +106,16 @@ $$c \cdot \vec{v} = c \cdot \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} = \begin{bm
 
 **Geometric interpretation:** Scales the vector (stretches or shrinks).
 
+<div class="python-interactive" markdown="1">
 ```python
+import numpy as np
+
 v = np.array([1, 2, 3])
-scaled = 2 * v  # [2, 4, 6]
+scaled = 2 * v
+print(f"Original vector: {v}")
+print(f"Scaled by 2: {scaled}")
 ```
+</div>
 
 **ML Application:** Learning rate scaling in gradient descent.
 
@@ -112,15 +125,25 @@ The dot product combines two vectors into a single number:
 
 $$\vec{a} \cdot \vec{b} = \sum_{i=1}^{n} a_i \cdot b_i = a_1 b_1 + a_2 b_2 + \cdots + a_n b_n$$
 
+<div class="python-interactive" markdown="1">
 ```python
+import numpy as np
+
 a = np.array([1, 2, 3])
 b = np.array([4, 5, 6])
 
 # Three ways to compute dot product
-dot1 = np.dot(a, b)      # 32
-dot2 = a @ b             # 32 (@ is matrix multiplication operator)
-dot3 = (a * b).sum()     # 32 (element-wise multiply, then sum)
+dot1 = np.dot(a, b)
+dot2 = a @ b
+dot3 = (a * b).sum()
+
+print(f"a = {a}")
+print(f"b = {b}")
+print(f"np.dot(a, b) = {dot1}")
+print(f"a @ b = {dot2}")
+print(f"(a * b).sum() = {dot3}")
 ```
+</div>
 
 **Geometric interpretation:**
 
@@ -140,13 +163,22 @@ where $\theta$ is the angle between vectors.
 
 Multiply or divide elements one-by-one (Hadamard product):
 
+<div class="python-interactive" markdown="1">
 ```python
+import numpy as np
+
 a = np.array([1, 2, 3])
 b = np.array([4, 5, 6])
 
-elementwise_mult = a * b  # [4, 10, 18]
-elementwise_div = a / b   # [0.25, 0.4, 0.5]
+elementwise_mult = a * b
+elementwise_div = a / b
+
+print(f"a = {a}")
+print(f"b = {b}")
+print(f"a * b = {elementwise_mult}")
+print(f"a / b = {elementwise_div}")
 ```
+</div>
 
 !!! warning "Dot Product vs Element-wise Multiplication"
     - `np.dot(a, b)` or `a @ b`: dot product → single number
@@ -162,12 +194,20 @@ The most common norm - the straight-line distance:
 
 $$\|\vec{v}\|_2 = \sqrt{v_1^2 + v_2^2 + \cdots + v_n^2}$$
 
+<div class="python-interactive" markdown="1">
 ```python
+import numpy as np
+
 v = np.array([3, 4])
-l2_norm = np.linalg.norm(v)  # 5.0
+l2_norm = np.linalg.norm(v)
 # Or manually:
-l2_norm_manual = np.sqrt((v ** 2).sum())  # 5.0
+l2_norm_manual = np.sqrt((v ** 2).sum())
+
+print(f"Vector: {v}")
+print(f"L2 norm (built-in): {l2_norm}")
+print(f"L2 norm (manual): {l2_norm_manual}")
 ```
+</div>
 
 ### L1 Norm (Manhattan Norm)
 
@@ -175,12 +215,20 @@ Sum of absolute values:
 
 $$\|\vec{v}\|_1 = |v_1| + |v_2| + \cdots + |v_n|$$
 
+<div class="python-interactive" markdown="1">
 ```python
+import numpy as np
+
 v = np.array([3, -4])
-l1_norm = np.linalg.norm(v, ord=1)  # 7.0
+l1_norm = np.linalg.norm(v, ord=1)
 # Or manually:
-l1_norm_manual = np.abs(v).sum()  # 7.0
+l1_norm_manual = np.abs(v).sum()
+
+print(f"Vector: {v}")
+print(f"L1 norm (built-in): {l1_norm}")
+print(f"L1 norm (manual): {l1_norm_manual}")
 ```
+</div>
 
 ### L∞ Norm (Maximum Norm)
 
@@ -188,12 +236,20 @@ The largest absolute value:
 
 $$\|\vec{v}\|_\infty = \max(|v_1|, |v_2|, \ldots, |v_n|)$$
 
+<div class="python-interactive" markdown="1">
 ```python
+import numpy as np
+
 v = np.array([3, -7, 2])
-linf_norm = np.linalg.norm(v, ord=np.inf)  # 7.0
+linf_norm = np.linalg.norm(v, ord=np.inf)
 # Or manually:
-linf_norm_manual = np.abs(v).max()  # 7.0
+linf_norm_manual = np.abs(v).max()
+
+print(f"Vector: {v}")
+print(f"L∞ norm (built-in): {linf_norm}")
+print(f"L∞ norm (manual): {linf_norm_manual}")
 ```
+</div>
 
 **ML Applications:**
 - **L2 norm**: Euclidean distance, L2 regularization
@@ -206,11 +262,18 @@ A **unit vector** has length 1. Normalizing a vector means converting it to a un
 
 $$\hat{v} = \frac{\vec{v}}{\|\vec{v}\|}$$
 
+<div class="python-interactive" markdown="1">
 ```python
+import numpy as np
+
 v = np.array([3, 4])
-v_normalized = v / np.linalg.norm(v)  # [0.6, 0.8]
-print(np.linalg.norm(v_normalized))   # 1.0
+v_normalized = v / np.linalg.norm(v)
+
+print(f"Original vector: {v}")
+print(f"Normalized vector: {v_normalized}")
+print(f"Norm of normalized vector: {np.linalg.norm(v_normalized):.10f}")
 ```
+</div>
 
 **ML Application:** Feature normalization to ensure all features have similar scales.
 
@@ -220,12 +283,20 @@ print(np.linalg.norm(v_normalized))   # 1.0
 
 $$d(\vec{a}, \vec{b}) = \|\vec{a} - \vec{b}\|_2 = \sqrt{\sum_{i=1}^{n} (a_i - b_i)^2}$$
 
+<div class="python-interactive" markdown="1">
 ```python
+import numpy as np
+
 a = np.array([1, 2, 3])
 b = np.array([4, 5, 6])
 
-distance = np.linalg.norm(a - b)  # 5.196
+distance = np.linalg.norm(a - b)
+
+print(f"a = {a}")
+print(f"b = {b}")
+print(f"Euclidean distance: {distance:.4f}")
 ```
+</div>
 
 **ML Application:** K-nearest neighbors, clustering algorithms.
 
@@ -237,13 +308,21 @@ $$\text{similarity} = \frac{\vec{a} \cdot \vec{b}}{\|\vec{a}\| \|\vec{b}\|}$$
 
 $$\text{similarity} \in [-1, 1]$$
 
+<div class="python-interactive" markdown="1">
 ```python
+import numpy as np
+
 a = np.array([1, 2, 3])
 b = np.array([4, 5, 6])
 
 cosine_sim = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
-print(cosine_sim)  # 0.9746 (very similar direction)
+
+print(f"a = {a}")
+print(f"b = {b}")
+print(f"Cosine similarity: {cosine_sim:.4f}")
+print("(very similar direction)" if cosine_sim > 0.9 else "")
 ```
+</div>
 
 **ML Application:** Text similarity, recommendation systems.
 
@@ -251,6 +330,7 @@ print(cosine_sim)  # 0.9746 (very similar direction)
 
 Let's represent and compare houses:
 
+<div class="python-interactive" markdown="1">
 ```python
 import numpy as np
 
@@ -280,12 +360,15 @@ if dist_1_2 < dist_1_3:
 else:
     print("House 3 is more similar to house 1")
 ```
+</div>
 
 ## Visualization
 
 Visualizing vectors helps build geometric intuition:
 
+<div class="python-interactive" markdown="1">
 ```python
+import numpy as np
 import matplotlib.pyplot as plt
 
 # Create vectors
@@ -315,6 +398,7 @@ ax.legend()
 ax.set_title('Vector Addition')
 plt.show()
 ```
+</div>
 
 ## Key Takeaways
 
