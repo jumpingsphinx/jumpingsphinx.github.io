@@ -124,12 +124,12 @@ function addRunButtons() {
     const pre = block.closest('pre');
     if (!pre) return;
 
-    // Check if parent div has python-interactive class
-    const parent = pre.parentElement;
-    if (!parent.classList.contains('python-interactive')) return;
+    // Check if any parent div has python-interactive class
+    const interactiveContainer = pre.closest('.python-interactive');
+    if (!interactiveContainer) return;
 
     // Don't add button twice
-    if (pre.nextElementSibling && pre.nextElementSibling.classList.contains('run-button')) {
+    if (interactiveContainer.querySelector('.run-button')) {
       return;
     }
 
@@ -149,9 +149,10 @@ function addRunButtons() {
       await runPythonCode(code, output, button);
     };
 
-    // Insert button and output after the code block
-    pre.parentNode.insertBefore(button, pre.nextSibling);
-    button.parentNode.insertBefore(output, button.nextSibling);
+    // Insert button and output after the highlight div
+    const highlightDiv = pre.parentElement;
+    highlightDiv.after(button);
+    button.after(output);
   });
 }
 
