@@ -119,19 +119,19 @@ async function runPythonCode(code, outputElement, buttonElement) {
 
 // Add run buttons to interactive code blocks
 function addRunButtons() {
-  // Find all code blocks marked as python-interactive
-  document.querySelectorAll('.language-python').forEach(block => {
-    const pre = block.closest('pre');
-    if (!pre) return;
-
-    // Check if any parent div has python-interactive class
-    const interactiveContainer = pre.closest('.python-interactive');
-    if (!interactiveContainer) return;
-
+  // Find all python-interactive containers and add buttons
+  document.querySelectorAll('.python-interactive').forEach(container => {
     // Don't add button twice
-    if (interactiveContainer.querySelector('.run-button')) {
+    if (container.querySelector('.run-button')) {
       return;
     }
+
+    // Find the code element inside
+    const code = container.querySelector('pre code');
+    if (!code) return;
+
+    const pre = code.closest('pre');
+    if (!pre) return;
 
     // Create run button
     const button = document.createElement('button');
@@ -145,8 +145,8 @@ function addRunButtons() {
 
     // Add click handler
     button.onclick = async () => {
-      const code = block.textContent;
-      await runPythonCode(code, output, button);
+      const codeText = code.textContent;
+      await runPythonCode(codeText, output, button);
     };
 
     // Insert button and output after the highlight div
