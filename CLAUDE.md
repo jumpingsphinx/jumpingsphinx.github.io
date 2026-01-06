@@ -169,6 +169,8 @@ Use clear, descriptive commit messages:
 <optional body with details>
 ```
 
+Do NOT include contributors, generated with claude code, or anything like that. 
+
 **Types:**
 - `feat`: New feature or content
 - `fix`: Bug fix or correction
