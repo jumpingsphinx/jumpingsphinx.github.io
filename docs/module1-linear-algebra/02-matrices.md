@@ -33,26 +33,38 @@ Rows = houses, Columns = [sqft, bedrooms, bathrooms, year_built]
 
 ## Creating Matrices in NumPy
 
+!!! tip "Try It Yourself"
+    Run this code to see how matrices are created in NumPy!
+
+<div class="python-interactive" markdown="1">
 ```python
 import numpy as np
 
 # Create a matrix
 A = np.array([[1, 2, 3],
               [4, 5, 6]])
-print(A.shape)  # (2, 3) - 2 rows, 3 columns
+print(f"Matrix A:\n{A}")
+print(f"Shape: {A.shape}")  # (2, 3) - 2 rows, 3 columns
 
 # Special matrices
 zeros = np.zeros((3, 4))       # 3x4 matrix of zeros
 ones = np.ones((2, 2))         # 2x2 matrix of ones
 identity = np.eye(3)           # 3x3 identity matrix
-random = np.random.rand(2, 3)  # 2x3 random matrix
 
-# From a dataset
+print(f"\nZeros matrix:\n{zeros}")
+print(f"\nIdentity matrix:\n{identity}")
+
+# From a dataset - houses example
 data = [[1500, 3, 2],
         [2000, 4, 3],
         [1200, 2, 1]]
 X = np.array(data)
+print(f"\nHouse dataset:\n{X}")
+print(f"Features: [sqft, bedrooms, bathrooms]")
 ```
+</div>
+
+**Try modifying:** Change the matrix dimensions or create your own dataset!
 
 ## Types of Matrices
 
@@ -186,23 +198,32 @@ a_{21}x_1 + a_{22}x_2
 
 Each element of the result is the **dot product** of a matrix row with the vector.
 
+!!! example "ML Application: Making Predictions"
+    This is exactly how a linear model makes predictions! Try it:
+
+<div class="python-interactive" markdown="1">
 ```python
-A = np.array([[1, 2],
-              [3, 4]])
-x = np.array([5, 6])
+import numpy as np
 
-y = A @ x  # [17, 39]
-# or
-y = np.dot(A, x)
+# Weight matrix (model parameters)
+W = np.array([[0.5, 0.3],
+              [0.2, 0.7]])
 
-# Manual computation:
-# y[0] = 1*5 + 2*6 = 17
-# y[1] = 3*5 + 4*6 = 39
+# Input features (e.g., house: [size_normalized, age_normalized])
+x = np.array([0.8, 0.6])
+
+# Make prediction: y = W @ x
+y = W @ x
+print(f"Weight matrix W:\n{W}")
+print(f"\nInput features x: {x}")
+print(f"\nPrediction y = W @ x: {y}")
+print(f"\nManual computation:")
+print(f"  y[0] = {W[0,0]}*{x[0]} + {W[0,1]}*{x[1]} = {W[0,0]*x[0] + W[0,1]*x[1]:.2f}")
+print(f"  y[1] = {W[1,0]}*{x[0]} + {W[1,1]}*{x[1]} = {W[1,0]*x[0] + W[1,1]*x[1]:.2f}")
 ```
+</div>
 
-**ML Application:** Linear model prediction:
-
-$$\hat{y} = Wx + b$$
+**Mathematical form:** $\hat{y} = Wx + b$
 
 where $W$ is a weight matrix, $x$ is input features, $b$ is bias.
 
@@ -247,6 +268,10 @@ $$output = W_3(W_2(W_1 x))$$
 
 ## Practical Example: Dataset Operations
 
+!!! example "Working with Real Data"
+    This is what you'll do in every ML project - manipulate datasets!
+
+<div class="python-interactive" markdown="1">
 ```python
 import numpy as np
 
@@ -257,21 +282,32 @@ X = np.array([[1, 2, 3],
               [10, 11, 12]])
 
 print(f"Dataset shape: {X.shape}")  # (4, 3)
+print(f"Dataset:\n{X}\n")
 
 # Mean of each feature (column)
-feature_means = X.mean(axis=0)  # [5.5, 6.5, 7.5]
+feature_means = X.mean(axis=0)
+print(f"Feature means: {feature_means}")
 
 # Mean of each sample (row)
-sample_means = X.mean(axis=1)   # [2, 5, 8, 11]
+sample_means = X.mean(axis=1)
+print(f"Sample means: {sample_means}")
 
-# Center the data (subtract mean)
+# Center the data (subtract mean) - important preprocessing!
 X_centered = X - feature_means
+print(f"\nCentered data:\n{X_centered}")
 
 # Get specific samples and features
-first_sample = X[0, :]      # [1, 2, 3]
-second_feature = X[:, 1]    # [2, 5, 8, 11]
-subset = X[0:2, 1:3]        # [[2, 3], [5, 6]]
+first_sample = X[0, :]      # First row
+second_feature = X[:, 1]    # Second column
+subset = X[0:2, 1:3]        # First 2 rows, columns 1-2
+
+print(f"\nFirst sample: {first_sample}")
+print(f"Second feature (all rows): {second_feature}")
+print(f"Subset [0:2, 1:3]:\n{subset}")
 ```
+</div>
+
+**Try it:** Change the indexing to extract different parts of the dataset!
 
 ## Visualization
 
