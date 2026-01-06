@@ -1,6 +1,6 @@
 # ML101 - Machine Learning Fundamentals
 
-**Version 1.1** • Last Updated: January 6, 2026
+**Version 1.2** • Last Updated: January 6, 2026
 
 > **Learn machine learning entirely in your browser - no installation required!**
 
