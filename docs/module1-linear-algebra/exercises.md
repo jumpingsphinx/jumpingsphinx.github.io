@@ -38,7 +38,7 @@ Each exercise includes:
 
 ## Exercise 1: Vector Operations with NumPy
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/ML101/blob/main/notebooks/module1-linear-algebra/exercise1-vectors.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module1-linear-algebra/exercise1-vectors.ipynb)
 
 **Time:** 1-1.5 hours
 
@@ -253,11 +253,11 @@ Once you're comfortable with linear algebra, you're ready for regression!
 2. Check the hints in the notebook
 3. Search the error message online
 4. Look at the solution for that specific part
-5. Open an issue on [GitHub](https://github.com/jumpingsphinx/ML101/issues)
+5. Open an issue on [GitHub](https://github.com/jumpingsphinx/jumpingsphinx.github.io/issues)
 
 **Found a bug or have a suggestion?**
 
-Please [open an issue](https://github.com/jumpingsphinx/ML101/issues) or submit a pull request!
+Please [open an issue](https://github.com/jumpingsphinx/jumpingsphinx.github.io/issues) or submit a pull request!
 
 ---
 

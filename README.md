@@ -3,7 +3,7 @@
 > **Learn machine learning entirely in your browser - no installation required!**
 
 [![Documentation](https://img.shields.io/badge/docs-live-brightgreen)](https://jumpingsphinx.github.io/)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/ML101/blob/main/notebooks/module1-linear-algebra/exercise1-vectors.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module1-linear-algebra/exercise1-vectors.ipynb)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ML101 is a comprehensive, **fully interactive** course designed to teach you machine learning from scratch. Whether you're a complete beginner or looking to solidify your fundamentals, this course offers a unique browser-based learning experience.
@@ -23,7 +23,7 @@ ML101 is a comprehensive, **fully interactive** course designed to teach you mac
 ### Path 1: Browser-Only (Recommended for Beginners)
 **No installation. Start learning in 30 seconds.**
 
-1. Visit the [**interactive lessons**](https://jumpingsphinx.github.io/)
+1. Visit the **[interactive lessons](https://jumpingsphinx.github.io/)** (deploying now - will be live in ~2 minutes)
 2. Click "▶ Run Code" buttons to execute Python in your browser
 3. Click "Open in Colab" badges to complete exercises in the cloud
 
@@ -33,8 +33,8 @@ ML101 is a comprehensive, **fully interactive** course designed to teach you mac
 
 ```bash
 # Clone the repository
-git clone https://github.com/jumpingsphinx/ML101.git
-cd ML101
+git clone https://github.com/jumpingsphinx/jumpingsphinx.github.io.git
+cd jumpingsphinx.github.io
 
 # Create virtual environment
 python -m venv venv
@@ -60,7 +60,7 @@ Learn the mathematical foundations of machine learning:
 - ✅ Eigenvalues and eigenvectors
 - ✅ Principal Component Analysis (PCA)
 
-**Exercises:** [Vector Operations](https://colab.research.google.com/github/jumpingsphinx/ML101/blob/main/notebooks/module1-linear-algebra/exercise1-vectors.ipynb) | Matrix Manipulations (coming soon) | PCA Implementation (coming soon)
+**Exercises:** [Vector Operations](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module1-linear-algebra/exercise1-vectors.ipynb) | Matrix Manipulations (coming soon) | PCA Implementation (coming soon)
 
 ---
 
@@ -114,13 +114,13 @@ Start with heavy guidance, progress to open-ended challenges. Real-world ML requ
 **Don't want to read? Jump right in:**
 
 1. **[Start Module 1 →](https://jumpingsphinx.github.io/module1-linear-algebra/)** - Begin with interactive linear algebra lessons
-2. **[Try an Exercise →](https://colab.research.google.com/github/jumpingsphinx/ML101/blob/main/notebooks/module1-linear-algebra/exercise1-vectors.ipynb)** - Open a Colab notebook and start coding
+2. **[Try an Exercise →](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module1-linear-algebra/exercise1-vectors.ipynb)** - Open a Colab notebook and start coding
 3. **[See the Demo →](https://jumpingsphinx.github.io/)** - Run Python code directly on the homepage
 
 ## 📁 Repository Structure
 
 ```
-ML101/
+jumpingsphinx.github.io/
 ├── docs/                          # MkDocs documentation source
 │   ├── index.md                   # Landing page with live code demo
 │   ├── getting-started.md         # Three learning paths explained
@@ -177,7 +177,7 @@ This course was built with the help of:
 
 ## 📬 Questions or Feedback?
 
-- 💬 [Open an issue](https://github.com/jumpingsphinx/ML101/issues) for bugs or questions
+- 💬 [Open an issue](https://github.com/jumpingsphinx/jumpingsphinx.github.io/issues) for bugs or questions
 - ⭐ Star this repo if you find it helpful!
 - 🔗 Share with others learning ML
 

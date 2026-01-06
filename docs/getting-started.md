@@ -100,7 +100,7 @@ You should see Python 3.9 or higher. If not, [download Python](https://www.pytho
 Clone the ML101 repository to your local machine:
 
 ```bash
-git clone https://github.com/jumpingsphinx/ML101.git
+git clone https://github.com/jumpingsphinx/jumpingsphinx.github.io.git
 cd ML101
 ```
 
@@ -280,7 +280,7 @@ Google Colab provides free cloud notebooks with GPU access - perfect for running
 
 Every exercise notebook in ML101 has a "Open in Colab" badge at the top. Just click it!
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/ML101/blob/main/notebooks/module1-linear-algebra/exercise1-vectors.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module1-linear-algebra/exercise1-vectors.ipynb)
 
 **Benefits:**
 - ✅ No installation required
@@ -328,4 +328,4 @@ Now that you're set up, it's time to start learning!
 
 ---
 
-**Having issues?** Open an issue on [GitHub](https://github.com/jumpingsphinx/ML101/issues) and we'll help you out!
+**Having issues?** Open an issue on [GitHub](https://github.com/jumpingsphinx/jumpingsphinx.github.io/issues) and we'll help you out!
