@@ -38,7 +38,7 @@ Each exercise includes:
 
 ## Exercise 1: Vector Operations with NumPy
 
-**File:** [`notebooks/module1-linear-algebra/exercise1-vectors.ipynb`](../../notebooks/module1-linear-algebra/exercise1-vectors.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/ML101/blob/main/notebooks/module1-linear-algebra/exercise1-vectors.ipynb)
 
 **Time:** 1-1.5 hours
 
@@ -73,13 +73,12 @@ np.zeros(), np.ones(), np.random.rand()
 2. **Similarity finder**: Find most similar vectors in a dataset
 3. **Visualizer**: Plot vectors and their operations
 
-[Open Exercise 1 Notebook](../../notebooks/module1-linear-algebra/exercise1-vectors.ipynb){ .md-button .md-button--primary }
-
 ---
 
 ## Exercise 2: Matrix Manipulations and Transformations
 
-**File:** [`notebooks/module1-linear-algebra/exercise2-matrices.ipynb`](../../notebooks/module1-linear-algebra/exercise2-matrices.ipynb)
+!!! info "Coming Soon"
+    This exercise is currently being developed. Check back soon!
 
 **Time:** 1.5-2 hours
 
@@ -114,13 +113,12 @@ np.linalg.solve(), np.linalg.det()
 2. **Dataset processor**: Center and normalize real data
 3. **Linear system solver**: Solve $Ax = b$ problems
 
-[Open Exercise 2 Notebook](../../notebooks/module1-linear-algebra/exercise2-matrices.ipynb){ .md-button .md-button--primary }
-
 ---
 
 ## Exercise 3: PCA Implementation from Scratch
 
-**File:** [`notebooks/module1-linear-algebra/exercise3-pca.ipynb`](../../notebooks/module1-linear-algebra/exercise3-pca.ipynb)
+!!! info "Coming Soon"
+    This exercise is currently being developed. Check back soon!
 
 **Time:** 2-3 hours
 
@@ -162,8 +160,6 @@ sklearn.decomposition.PCA
 - Digits dataset (64D → 2D for visualization)
 - Custom synthetic data
 
-[Open Exercise 3 Notebook](../../notebooks/module1-linear-algebra/exercise3-pca.ipynb){ .md-button .md-button--primary }
-
 ---
 
 ## Solutions
@@ -174,11 +170,8 @@ After completing each exercise, review the solutions to:
 - Understand best practices
 - Debug any issues
 
-**Solution Files:**
-
-- [`solution1-vectors.ipynb`](../../notebooks/module1-linear-algebra/solutions/solution1-vectors.ipynb)
-- [`solution2-matrices.ipynb`](../../notebooks/module1-linear-algebra/solutions/solution2-matrices.ipynb)
-- [`solution3-pca.ipynb`](../../notebooks/module1-linear-algebra/solutions/solution3-pca.ipynb)
+!!! info "Solutions Coming Soon"
+    Solution notebooks will be added as exercises are completed. Exercise 1 solution is currently being developed.
 
 !!! warning "Use Solutions Wisely"
     Try to complete exercises independently first. Looking at solutions too early prevents deep learning. Use them for verification and learning alternative approaches.
