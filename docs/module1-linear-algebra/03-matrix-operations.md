@@ -93,24 +93,47 @@ Q, R = np.linalg.qr(A)
 
 ### The Problem
 
-Solve $Ax = b$ for $x$:
+Solve $Ax = b$ for $x$. This is the foundation of linear regression!
 
+!!! example "ML in Action: Solving for Model Parameters"
+    This demonstrates how linear regression finds the best-fit parameters:
+
+<div class="python-interactive" markdown="1">
 ```python
+import numpy as np
+
+# System: 3x + y = 9
+#         x + 2y = 8
+# Solution: x=2, y=3
+
 A = np.array([[3, 1],
               [1, 2]])
 b = np.array([9, 8])
 
 # Method 1: Using solve (most efficient)
-x = np.linalg.solve(A, b)  # [2, 3]
+x_solve = np.linalg.solve(A, b)
+print(f"System of equations:")
+print(f"  3x + y = 9")
+print(f"  x + 2y = 8")
+print(f"\nSolution using np.linalg.solve: {x_solve}")
 
 # Method 2: Using inverse (less efficient)
-x = np.linalg.inv(A) @ b
+A_inv = np.linalg.inv(A)
+x_inv = A_inv @ b
+print(f"Solution using inverse: {x_inv}")
 
-# Method 3: Using least squares (works for non-square matrices)
-x, residuals, rank, s = np.linalg.lstsq(A, b, rcond=None)
+# Verify the solution
+verification = A @ x_solve
+print(f"\nVerification: A @ x = {verification}")
+print(f"Expected b = {b}")
+print(f"Match: {np.allclose(verification, b)}")
+
+# This is what linear regression does!
+print(f"\n💡 Linear regression solves: (X^T X)w = X^T y")
 ```
+</div>
 
-**ML Application:** This is exactly what linear regression does!
+**ML Application:** This is exactly what linear regression does to find optimal weights!
 
 ## Pseudo-Inverse (Moore-Penrose Inverse)
 
