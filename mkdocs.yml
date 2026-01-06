@@ -3,8 +3,8 @@ site_description: A comprehensive, hands-on guide to machine learning fundamenta
 site_author: ML101 Contributors
 site_url: https://jumpingsphinx.github.io/
 
-repo_name: jumpingsphinx/ML101
-repo_url: https://github.com/jumpingsphinx/ML101
+repo_name: jumpingsphinx/jumpingsphinx.github.io
+repo_url: https://github.com/jumpingsphinx/jumpingsphinx.github.io
 edit_uri: edit/main/docs/
 
 theme:
