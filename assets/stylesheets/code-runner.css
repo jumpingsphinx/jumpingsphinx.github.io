@@ -1,0 +1,182 @@
+/**
+ * Code Runner Styles
+ * Styling for interactive Python code execution
+ */
+
+/* Run button styling */
+.run-button {
+  margin: 0.5rem 0 0.25rem 0;
+  padding: 0.5rem 1rem;
+  background-color: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+  border: none;
+  border-radius: 0.2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.run-button:hover {
+  background-color: var(--md-accent-fg-color);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.run-button:active {
+  transform: translateY(0);
+}
+
+.run-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Output container */
+.code-output {
+  margin: 0.5rem 0 1rem 0;
+  padding: 1rem;
+  background-color: var(--md-code-bg-color);
+  border-left: 4px solid var(--md-primary-fg-color);
+  border-radius: 0.2rem;
+  font-family: var(--md-code-font-family);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  min-height: 2rem;
+}
+
+.code-output:empty {
+  display: none;
+}
+
+.code-output pre {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Error styling */
+.code-output.error {
+  border-left-color: #f44336;
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+[data-md-color-scheme="slate"] .code-output.error {
+  background-color: #3e2723;
+  color: #ef9a9a;
+}
+
+/* Success message */
+.code-output.success {
+  border-left-color: #4caf50;
+  color: #2e7d32;
+}
+
+[data-md-color-scheme="slate"] .code-output.success {
+  color: #a5d6a7;
+}
+
+/* Plot images */
+.code-output img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0.5rem 0;
+  border-radius: 0.2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.run-button:disabled {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Interactive code block container */
+.python-interactive {
+  position: relative;
+  margin: 1rem 0;
+}
+
+.python-interactive pre {
+  margin-bottom: 0;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+  .run-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .code-output {
+    font-size: 0.75rem;
+    padding: 0.75rem;
+  }
+}
+
+/* Tooltip for first-time users */
+.run-button::before {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem;
+  background-color: #333;
+  color: #fff;
+  border-radius: 0.2rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  margin-bottom: 0.5rem;
+}
+
+.run-button:hover::before {
+  opacity: 1;
+}
+
+/* Colab badge integration */
+.colab-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
+  background-color: #f9ab00;
+  color: white;
+  text-decoration: none;
+  border-radius: 0.2rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.colab-badge:hover {
+  background-color: #ea8e00;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+.colab-badge img {
+  height: 20px;
+  width: auto;
+}
