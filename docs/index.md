@@ -54,7 +54,7 @@ Linear algebra is the mathematical foundation of machine learning. In this modul
 
 **Time Commitment:** 4-6 hours
 
-[Start Module 1](module1-linear-algebra/index.md){ .md-button .md-button--primary }
+[Start Module 1](module1-linear-algebra/){ .md-button .md-button--primary }
 
 ---
 
@@ -161,7 +161,7 @@ Ready to begin your machine learning journey?
 
 1. [Set up your environment](getting-started.md)
 2. Review the [learning path](learning-path.md)
-3. Start with [Module 1: Linear Algebra](module1-linear-algebra/index.md)
+3. Start with [Module 1: Linear Algebra](module1-linear-algebra/)
 
 [Get Started](getting-started.md){ .md-button .md-button--primary }
 

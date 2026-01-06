@@ -1,6 +1,8 @@
 # ML101 - Machine Learning Fundamentals
 
-> **Learn machine learning entirely in y our browser - no installation required!**
+**Version 1.0** • Last Updated: January 6, 2026
+
+> **Learn machine learning entirely in your browser - no installation required!**
 
 [![Documentation](https://img.shields.io/badge/docs-live-brightgreen)](https://jumpingsphinx.github.io/)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module1-linear-algebra/exercise1-vectors.ipynb)
@@ -23,11 +25,11 @@ ML101 is a comprehensive, **fully interactive** course designed to teach you mac
 ### Path 1: Browser-Only (Recommended for Beginners)
 **No installation. Start learning in 30 seconds.**
 
-1. Visit the **[interactive lessons](https://jumpingsphinx.github.io/)** (deploying now - will be live in ~2 minutes)
+1. Visit the **[Module 1 Overview](https://jumpingsphinx.github.io/module1-linear-algebra/)** - Start here
 2. Click "▶ Run Code" buttons to execute Python in your browser
 3. Click "Open in Colab" badges to complete exercises in the cloud
 
-[**Start Learning Now →**](https://jumpingsphinx.github.io/)
+[**Start Learning Now →**](https://jumpingsphinx.github.io/module1-linear-algebra/)
 
 ### Path 2: Local Development (For Advanced Users)
 

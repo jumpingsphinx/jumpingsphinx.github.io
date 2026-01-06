@@ -168,4 +168,4 @@ Let's begin with the fundamentals of vectors!
 
 ---
 
-**Questions?** Open an issue on [GitHub](https://github.com/jumpingsphinx/ML101/issues).
+**Questions?** Open an issue on [GitHub](https://github.com/jumpingsphinx/jumpingsphinx.github.io/issues).
