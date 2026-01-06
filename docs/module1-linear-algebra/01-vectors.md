@@ -12,7 +12,7 @@ A **vector** is an ordered list of numbers. You can think of vectors in two comp
 
 A vector represents a point in space or a direction with magnitude. For example, in 2D:
 
-$$\vec{v} = \begin{bmatrix} 3 \\ 2 \end{bmatrix}$$
+$$\vec{v} = \begin{bmatrix} 3 \\\\ 2 \end{bmatrix}$$
 
 This vector points from the origin (0, 0) to the point (3, 2).
 
@@ -23,7 +23,8 @@ A vector is simply a collection of numbers in a specific order. In machine learn
 - The vector represents a **data sample**
 
 **Example:** A house might be represented as:
-$$\vec{house} = \begin{bmatrix} 1500 \\ 3 \\ 2 \\ 250000 \end{bmatrix}$$
+
+$$\vec{house} = \begin{bmatrix} 1500 \\\\ 3 \\\\ 2 \\\\ 250000 \end{bmatrix}$$
 
 where features are: [square feet, bedrooms, bathrooms, price]
 
@@ -32,9 +33,11 @@ where features are: [square feet, bedrooms, bathrooms, price]
 Vectors can be written in different ways:
 
 - **Column vector** (most common in ML):
-$$\vec{v} = \begin{bmatrix} v_1 \\ v_2 \\ \vdots \\ v_n \end{bmatrix}$$
+
+$$\vec{v} = \begin{bmatrix} v_1 \\\\ v_2 \\\\ \vdots \\\\ v_n \end{bmatrix}$$
 
 - **Row vector**:
+
 $$\vec{v}^T = \begin{bmatrix} v_1 & v_2 & \cdots & v_n \end{bmatrix}$$
 
 - **Python/NumPy**:
@@ -79,7 +82,7 @@ print(f"Ones: {ones}")
 
 Add vectors element-wise:
 
-$$\vec{a} + \vec{b} = \begin{bmatrix} a_1 \\ a_2 \end{bmatrix} + \begin{bmatrix} b_1 \\ b_2 \end{bmatrix} = \begin{bmatrix} a_1 + b_1 \\ a_2 + b_2 \end{bmatrix}$$
+$$\vec{a} + \vec{b} = \begin{bmatrix} a_1 \\\\ a_2 \end{bmatrix} + \begin{bmatrix} b_1 \\\\ b_2 \end{bmatrix} = \begin{bmatrix} a_1 + b_1 \\\\ a_2 + b_2 \end{bmatrix}$$
 
 **Geometric interpretation:** Place vectors tip-to-tail.
 
@@ -102,7 +105,7 @@ print(f"a + b = {c}")
 
 Multiply each element by a scalar:
 
-$$c \cdot \vec{v} = c \cdot \begin{bmatrix} v_1 \\ v_2 \end{bmatrix} = \begin{bmatrix} c \cdot v_1 \\ c \cdot v_2 \end{bmatrix}$$
+$$c \cdot \vec{v} = c \cdot \begin{bmatrix} v_1 \\\\ v_2 \end{bmatrix} = \begin{bmatrix} c \cdot v_1 \\\\ c \cdot v_2 \end{bmatrix}$$
 
 **Geometric interpretation:** Scales the vector (stretches or shrinks).
 
