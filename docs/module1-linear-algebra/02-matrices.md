@@ -229,42 +229,249 @@ where $W$ is a weight matrix, $x$ is input features, $b$ is bias.
 
 ## Matrix-Matrix Multiplication
 
+Matrix multiplication is **one of the most important operations in machine learning**. It's how neural networks process data, how we transform features, and how we compute predictions for entire datasets at once.
+
+### The Mechanics
+
 Multiplying two matrices combines their transformations:
 
 $$C = AB$$
 
-where $C_{ij} = \sum_{k} A_{ik} B_{kj}$
+where each element is computed as:
 
-**Rule:** For $A_{m \times n}$ and $B_{n \times p}$, result is $C_{m \times p}$
+$$C_{ij} = \sum_{k=1}^{n} A_{ik} B_{kj}$$
+
+This means: **element $(i,j)$ in $C$ is the dot product of row $i$ from $A$ with column $j$ from $B$**.
+
+**Dimension Rule:** For $A_{m \times n}$ and $B_{n \times p}$, the result is $C_{m \times p}$
 
 !!! warning "Dimension Compatibility"
     Number of columns in $A$ must equal number of rows in $B$!
 
+    ✅ $(3 \times 2) \times (2 \times 4) = (3 \times 4)$ - Valid!
+
+    ❌ $(3 \times 2) \times (3 \times 4)$ - Invalid! (2 ≠ 3)
+
+### Step-by-Step Example
+
+<div class="python-interactive" markdown="1">
 ```python
+import numpy as np
+
+# Simple 2x2 example
 A = np.array([[1, 2],
               [3, 4]])  # 2x2
 B = np.array([[5, 6],
               [7, 8]])  # 2x2
 
-C = A @ B  # 2x2
-# [[19, 22],
-#  [43, 50]]
+C = A @ B  # Matrix multiplication
 
-# Element-by-element:
-# C[0,0] = 1*5 + 2*7 = 19
-# C[0,1] = 1*6 + 2*8 = 22
-# C[1,0] = 3*5 + 4*7 = 43
-# C[1,1] = 3*6 + 4*8 = 50
+print("Matrix A:")
+print(A)
+print("\nMatrix B:")
+print(B)
+print("\nResult C = A @ B:")
+print(C)
+
+# Let's compute each element manually to understand
+print("\n--- Manual computation ---")
+print(f"C[0,0] = A[0,:]·B[:,0] = {A[0,0]}*{B[0,0]} + {A[0,1]}*{B[1,0]} = {C[0,0]}")
+print(f"C[0,1] = A[0,:]·B[:,1] = {A[0,0]}*{B[0,1]} + {A[0,1]}*{B[1,1]} = {C[0,1]}")
+print(f"C[1,0] = A[1,:]·B[:,0] = {A[1,0]}*{B[0,0]} + {A[1,1]}*{B[1,0]} = {C[1,0]}")
+print(f"C[1,1] = A[1,:]·B[:,1] = {A[1,0]}*{B[0,1]} + {A[1,1]}*{B[1,1]} = {C[1,1]}")
 ```
+</div>
 
-**Properties:**
-- **Not commutative:** $AB \neq BA$ (usually)
-- **Associative:** $(AB)C = A(BC)$
-- **Distributive:** $A(B + C) = AB + AC$
+### Important Properties
 
-**ML Application:** Stacking neural network layers:
+**1. Not Commutative** - Order matters!
 
-$$output = W_3(W_2(W_1 x))$$
+<div class="python-interactive" markdown="1">
+```python
+import numpy as np
+
+A = np.array([[1, 2],
+              [3, 4]])
+B = np.array([[5, 6],
+              [7, 8]])
+
+AB = A @ B
+BA = B @ A
+
+print("A @ B:")
+print(AB)
+print("\nB @ A:")
+print(BA)
+print(f"\nAre they equal? {np.array_equal(AB, BA)}")
+print("This is why order matters in neural networks!")
+```
+</div>
+
+**2. Associative** - $(AB)C = A(BC)$
+
+**3. Distributive** - $A(B + C) = AB + AC$
+
+### ML Application 1: Batch Predictions
+
+This is **crucial**: matrix multiplication lets us make predictions for an **entire dataset at once**!
+
+<div class="python-interactive" markdown="1">
+```python
+import numpy as np
+
+# Weight matrix for a linear model (2 outputs, 3 inputs)
+W = np.array([[0.5, 0.3, 0.1],    # Weights for output 1
+              [0.2, 0.4, 0.6]])    # Weights for output 2
+
+# Dataset: 4 samples, 3 features each
+X = np.array([[1.0, 2.0, 3.0],    # Sample 1
+              [4.0, 5.0, 6.0],    # Sample 2
+              [7.0, 8.0, 9.0],    # Sample 3
+              [2.5, 3.5, 4.5]])   # Sample 4
+
+print(f"Weight matrix W shape: {W.shape}")  # (2, 3)
+print(f"Data matrix X shape: {X.shape}")    # (4, 3)
+
+# Make predictions for ALL samples at once!
+# Y = X @ W.T  (transpose W so dimensions align)
+Y = X @ W.T
+
+print(f"\nPredictions Y shape: {Y.shape}")  # (4, 2)
+print("Predictions for all 4 samples:")
+print(Y)
+
+print("\n--- Verify first sample manually ---")
+sample1 = X[0]  # [1.0, 2.0, 3.0]
+pred1_out1 = np.dot(sample1, W[0])  # Prediction for output 1
+pred1_out2 = np.dot(sample1, W[1])  # Prediction for output 2
+print(f"Sample 1 predictions: [{pred1_out1:.2f}, {pred1_out2:.2f}]")
+print(f"Matches Y[0]: {Y[0]}")
+```
+</div>
+
+**Key Insight:** Instead of looping through samples one-by-one, matrix multiplication processes the entire dataset in one operation - this is **vectorization**, the foundation of fast ML!
+
+### ML Application 2: Neural Network Layers
+
+Each layer in a neural network is a matrix multiplication:
+
+<div class="python-interactive" markdown="1">
+```python
+import numpy as np
+
+# Simulate a 2-layer neural network
+# Layer 1: 3 inputs → 4 hidden units
+# Layer 2: 4 hidden units → 2 outputs
+
+# Weight matrices
+W1 = np.random.randn(3, 4) * 0.5  # Shape: (3, 4)
+W2 = np.random.randn(4, 2) * 0.5  # Shape: (4, 2)
+
+# Input: 5 samples, 3 features each
+X = np.array([[1.0, 2.0, 3.0],
+              [4.0, 5.0, 6.0],
+              [7.0, 8.0, 9.0],
+              [2.5, 3.5, 4.5],
+              [1.5, 2.5, 3.5]])
+
+print(f"Input X shape: {X.shape}")  # (5, 3)
+print(f"W1 shape: {W1.shape}")      # (3, 4)
+print(f"W2 shape: {W2.shape}")      # (4, 2)
+
+# Forward pass through network
+hidden = X @ W1  # (5, 3) @ (3, 4) = (5, 4)
+output = hidden @ W2  # (5, 4) @ (4, 2) = (5, 2)
+
+print(f"\nHidden layer shape: {hidden.shape}")  # (5, 4)
+print(f"Output shape: {output.shape}")          # (5, 2)
+
+print("\nFirst sample:")
+print(f"  Input: {X[0]}")
+print(f"  Hidden activations: {hidden[0]}")
+print(f"  Output: {output[0]}")
+
+print("\n🔥 This is the core of deep learning!")
+print(f"   We processed {X.shape[0]} samples through a 2-layer network")
+print(f"   using just 2 matrix multiplications!")
+```
+</div>
+
+**Why This Matters:**
+
+1. **Speed**: GPUs are optimized for matrix multiplication - this is why deep learning is fast
+2. **Parallel Processing**: All samples computed simultaneously
+3. **Composability**: Stack layers by chaining matrix multiplications: $Y = X W_1 W_2 W_3 ...$
+
+### ML Application 3: Feature Transformation
+
+Transform all features at once:
+
+<div class="python-interactive" markdown="1">
+```python
+import numpy as np
+
+# Original features: [height_cm, weight_kg, age_years]
+X = np.array([[170, 70, 25],
+              [180, 80, 30],
+              [165, 60, 22]])
+
+# Transformation matrix - create new features
+# New features: [BMI-like, age_scaled, combined_metric]
+T = np.array([[0.01,  0.00, 0.0],   # Scale height
+              [0.00,  0.01, 0.0],   # Scale weight
+              [0.34, -0.34, 0.1]])  # Combined feature
+
+X_transformed = X @ T.T
+
+print("Original features:")
+print(X)
+print("\nTransformation matrix:")
+print(T)
+print("\nTransformed features:")
+print(X_transformed)
+print("\nAll 3 samples transformed in one operation!")
+```
+</div>
+
+### Dimension Troubleshooting
+
+<div class="python-interactive" markdown="1">
+```python
+import numpy as np
+
+# Common scenarios
+A = np.array([[1, 2, 3],
+              [4, 5, 6]])  # 2x3
+
+B = np.array([[1, 2],
+              [3, 4],
+              [5, 6]])     # 3x2
+
+C = np.array([[1, 2, 3]])  # 1x3
+
+print(f"A shape: {A.shape}")  # (2, 3)
+print(f"B shape: {B.shape}")  # (3, 2)
+print(f"C shape: {C.shape}")  # (1, 3)
+
+# Valid multiplications
+AB = A @ B  # (2,3) @ (3,2) = (2,2) ✅
+print(f"\nA @ B shape: {AB.shape}")
+print(AB)
+
+BA = B @ A  # (3,2) @ (2,3) = (3,3) ✅
+print(f"\nB @ A shape: {BA.shape}")
+print(BA)
+
+# Transpose to fix dimension mismatch
+# CA would fail: (1,3) @ (2,3) ❌
+# But C @ A.T works: (1,3) @ (3,2) ✅
+CA_T = C @ A.T
+print(f"\nC @ A.T shape: {CA_T.shape}")
+print(CA_T)
+
+print("\n💡 Tip: Use .T to transpose when dimensions don't match!")
+```
+</div>
 
 ## Practical Example: Dataset Operations
 
@@ -309,10 +516,11 @@ print(f"Subset [0:2, 1:3]:\n{subset}")
 
 **Try it:** Change the indexing to extract different parts of the dataset!
 
-## Visualization
+## Visualization: Matrix Transformations
 
-Matrices can transform vectors:
+Matrices can transform vectors - this is how computer graphics work and how neural networks transform data!
 
+<div class="python-interactive" markdown="1">
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
@@ -322,38 +530,64 @@ v = np.array([1, 1])
 
 # Transformation matrices
 rotation = np.array([[0, -1],
-                      [1, 0]])  # 90° rotation
+                      [1, 0]])  # 90° counter-clockwise rotation
 scaling = np.array([[2, 0],
                      [0, 0.5]])  # Scale x by 2, y by 0.5
 shear = np.array([[1, 0.5],
                    [0, 1]])  # Shear transformation
 
-# Apply transformations
+# Apply transformations using matrix multiplication
 v_rot = rotation @ v
 v_scale = scaling @ v
 v_shear = shear @ v
 
-# Plot
+print(f"Original vector: {v}")
+print(f"After rotation: {v_rot}")
+print(f"After scaling: {v_scale}")
+print(f"After shear: {v_shear}")
+
+# Plot transformations
 fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-for ax, v_transformed, title in zip(axes,
-                                     [v_rot, v_scale, v_shear],
-                                     ['Rotation', 'Scaling', 'Shear']):
+transformations = [
+    (v_rot, 'Rotation (90°)', rotation),
+    (v_scale, 'Scaling (2x, 0.5y)', scaling),
+    (v_shear, 'Shear', shear)
+]
+
+for ax, (v_transformed, title, matrix) in zip(axes, transformations):
+    # Plot original vector
     ax.quiver(0, 0, v[0], v[1], angles='xy', scale_units='xy', scale=1,
-              color='blue', width=0.01, label='Original')
+              color='blue', width=0.01, label='Original', zorder=3)
+
+    # Plot transformed vector
     ax.quiver(0, 0, v_transformed[0], v_transformed[1],
               angles='xy', scale_units='xy', scale=1,
-              color='red', width=0.01, label='Transformed')
+              color='red', width=0.01, label='Transformed', zorder=3)
+
+    # Formatting
     ax.set_xlim(-2, 3)
     ax.set_ylim(-2, 3)
     ax.set_aspect('equal')
-    ax.grid(True)
-    ax.legend()
-    ax.set_title(title)
+    ax.grid(True, alpha=0.3)
+    ax.axhline(y=0, color='k', linewidth=0.5)
+    ax.axvline(x=0, color='k', linewidth=0.5)
+    ax.legend(loc='upper right')
+    ax.set_title(f'{title}\n{matrix[0]}\n{matrix[1]}', fontsize=10)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
 
 plt.tight_layout()
 plt.show()
+
+print("\n🎨 Try changing the vector v or the transformation matrices!")
 ```
+</div>
+
+**Try modifying:**
+- Change `v = np.array([1, 1])` to `[2, 1]` or `[1, 3]`
+- Create your own transformation matrix
+- Combine transformations: `combined = rotation @ scaling @ v`
 
 ## Key Takeaways
 
