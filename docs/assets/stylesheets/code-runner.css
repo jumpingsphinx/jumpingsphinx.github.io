@@ -52,6 +52,11 @@
   border-color: var(--md-default-fg-color--lightest, #444);
 }
 
+[data-md-color-scheme="slate"] .code-editor-container .CodeMirror {
+  background-color: #212121;
+  color: #eeffff;
+}
+
 [data-md-color-scheme="slate"] .code-editor-container .CodeMirror-gutters {
   border-right-color: #444;
   background-color: #1e1e1e;
@@ -59,6 +64,56 @@
 
 [data-md-color-scheme="slate"] .code-editor-container .CodeMirror-linenumber {
   color: #666;
+}
+
+/* Dark mode syntax highlighting */
+[data-md-color-scheme="slate"] .code-editor-container .cm-keyword {
+  color: #c792ea !important;
+}
+
+[data-md-color-scheme="slate"] .code-editor-container .cm-builtin {
+  color: #82aaff !important;
+}
+
+[data-md-color-scheme="slate"] .code-editor-container .cm-variable {
+  color: #eeffff !important;
+}
+
+[data-md-color-scheme="slate"] .code-editor-container .cm-variable-2 {
+  color: #eeffff !important;
+}
+
+[data-md-color-scheme="slate"] .code-editor-container .cm-def {
+  color: #82aaff !important;
+}
+
+[data-md-color-scheme="slate"] .code-editor-container .cm-string {
+  color: #c3e88d !important;
+}
+
+[data-md-color-scheme="slate"] .code-editor-container .cm-number {
+  color: #f78c6c !important;
+}
+
+[data-md-color-scheme="slate"] .code-editor-container .cm-operator {
+  color: #89ddff !important;
+}
+
+[data-md-color-scheme="slate"] .code-editor-container .cm-comment {
+  color: #676e95 !important;
+  font-style: italic;
+}
+
+[data-md-color-scheme="slate"] .code-editor-container .cm-meta {
+  color: #ffcb6b !important;
+}
+
+[data-md-color-scheme="slate"] .code-editor-container .cm-property {
+  color: #c792ea !important;
+}
+
+[data-md-color-scheme="slate"] .code-editor-container .cm-attribute {
+  color: #c792ea !important;
 }
 
 /* Cursor and selection */
