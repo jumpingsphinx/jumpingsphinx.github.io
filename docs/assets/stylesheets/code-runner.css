@@ -1,36 +1,94 @@
 /**
  * Code Runner Styles
- * Styling for interactive Python code execution
+ * Styling for interactive Python code execution with CodeMirror
  */
 
-/* Editable code textarea */
-.code-editor {
-  width: 100%;
-  padding: 1rem;
-  font-family: var(--md-code-font-family, 'Roboto Mono', 'SFMono-Regular', Consolas, monospace);
-  font-size: 0.85rem;
-  line-height: 1.6;
-  background-color: var(--md-code-bg-color, #f5f5f5);
-  color: var(--md-code-fg-color, #333);
-  border: 1px solid var(--md-default-fg-color--lightest, #ddd);
+/* CodeMirror editor wrapper */
+.code-editor-wrapper {
+  margin: 1rem 0 0.5rem 0;
   border-radius: 0.25rem;
-  resize: vertical;
-  tab-size: 4;
-  -moz-tab-size: 4;
-  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid var(--md-default-fg-color--lightest, #ddd);
 }
 
-.code-editor:focus {
-  outline: 2px solid var(--md-primary-fg-color, #4051b5);
-  outline-offset: -1px;
-  border-color: var(--md-primary-fg-color, #4051b5);
+.code-editor-container {
+  width: 100%;
 }
 
-/* Dark mode for code editor */
-[data-md-color-scheme="slate"] .code-editor {
-  background-color: var(--md-code-bg-color, #1e1e1e);
-  color: var(--md-code-fg-color, #e0e0e0);
+/* CodeMirror overrides */
+.code-editor-container .CodeMirror {
+  height: auto;
+  min-height: 80px;
+  max-height: 500px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  border-radius: 0.25rem;
+}
+
+.code-editor-container .CodeMirror-scroll {
+  min-height: 80px;
+  max-height: 500px;
+}
+
+/* Line numbers styling */
+.code-editor-container .CodeMirror-linenumbers {
+  padding: 0 8px 0 4px;
+}
+
+.code-editor-container .CodeMirror-linenumber {
+  color: var(--md-default-fg-color--lighter, #999);
+  font-size: 0.8rem;
+}
+
+/* Gutter styling */
+.code-editor-container .CodeMirror-gutters {
+  border-right: 1px solid var(--md-default-fg-color--lightest, #e0e0e0);
+  background-color: var(--md-code-bg-color, #f8f8f8);
+}
+
+/* Dark mode adjustments */
+[data-md-color-scheme="slate"] .code-editor-wrapper {
   border-color: var(--md-default-fg-color--lightest, #444);
+}
+
+[data-md-color-scheme="slate"] .code-editor-container .CodeMirror-gutters {
+  border-right-color: #444;
+  background-color: #1e1e1e;
+}
+
+[data-md-color-scheme="slate"] .code-editor-container .CodeMirror-linenumber {
+  color: #666;
+}
+
+/* Cursor and selection */
+.code-editor-container .CodeMirror-cursor {
+  border-left-color: var(--md-primary-fg-color, #4051b5);
+  border-left-width: 2px;
+}
+
+.code-editor-container .CodeMirror-selected {
+  background-color: rgba(64, 81, 181, 0.2) !important;
+}
+
+[data-md-color-scheme="slate"] .code-editor-container .CodeMirror-selected {
+  background-color: rgba(82, 108, 254, 0.3) !important;
+}
+
+/* Active line highlight */
+.code-editor-container .CodeMirror-activeline-background {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+[data-md-color-scheme="slate"] .code-editor-container .CodeMirror-activeline-background {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Matching brackets */
+.code-editor-container .CodeMirror-matchingbracket {
+  color: inherit !important;
+  background-color: rgba(64, 81, 181, 0.3);
+  border-bottom: 1px solid var(--md-primary-fg-color, #4051b5);
 }
 
 /* Button container */
@@ -39,6 +97,7 @@
   gap: 0.5rem;
   margin: 0.5rem 0;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 /* Run button styling */
@@ -100,7 +159,7 @@
   background-color: var(--md-default-fg-color--lightest, #333);
 }
 
-/* Loading animation for button */
+/* Loading animation */
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }
@@ -110,14 +169,22 @@
   animation: pulse 1.5s ease-in-out infinite;
 }
 
+/* Keyboard shortcut hint */
+.code-buttons::after {
+  content: 'Tip: Ctrl+Enter to run';
+  font-size: 0.75rem;
+  color: var(--md-default-fg-color--light, #666);
+  margin-left: auto;
+}
+
 /* Output container */
 .code-output {
-  margin: 0.5rem 0 1rem 0;
+  margin: 0.5rem 0 1.5rem 0;
   padding: 1rem;
   background-color: var(--md-code-bg-color, #f5f5f5);
   border-left: 4px solid var(--md-primary-fg-color, #4051b5);
   border-radius: 0 0.25rem 0.25rem 0;
-  font-family: var(--md-code-font-family, 'Roboto Mono', monospace);
+  font-family: 'JetBrains Mono', 'Roboto Mono', monospace;
   font-size: 0.85rem;
   line-height: 1.6;
   overflow-x: auto;
@@ -143,7 +210,6 @@
   color: #c62828;
 }
 
-/* Dark mode error styling */
 [data-md-color-scheme="slate"] .code-output.error {
   background-color: rgba(244, 67, 54, 0.1);
 }
@@ -167,20 +233,6 @@
   margin: 1rem 0;
 }
 
-/* Keyboard shortcut hint */
-.code-editor::placeholder {
-  color: var(--md-default-fg-color--lighter, #999);
-}
-
-/* Tooltip for keyboard shortcut */
-.code-buttons::after {
-  content: 'Tip: Ctrl+Enter to run';
-  font-size: 0.75rem;
-  color: var(--md-default-fg-color--light, #666);
-  margin-left: auto;
-  align-self: center;
-}
-
 /* Mobile responsiveness */
 @media screen and (max-width: 768px) {
   .code-buttons {
@@ -201,7 +253,7 @@
     padding: 0.75rem;
   }
   
-  .code-editor {
+  .code-editor-container .CodeMirror {
     font-size: 0.8rem;
   }
 }

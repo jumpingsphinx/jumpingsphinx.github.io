@@ -1,11 +1,12 @@
 /**
  * Pyodide Runner - Execute Python code in the browser
- * Provides interactive code execution for ML101
+ * Provides interactive code execution for ML101 with CodeMirror editor
  */
 
 let pyodide;
 let pyodideReady = false;
 let pyodideLoading = false;
+let codeMirrorEditors = new Map();
 
 // Initialize Pyodide with required packages
 async function initPyodide() {
@@ -14,7 +15,6 @@ async function initPyodide() {
   }
 
   if (pyodideLoading) {
-    // Wait for existing load to complete
     while (!pyodideReady) {
       await new Promise(resolve => setTimeout(resolve, 100));
     }
@@ -29,11 +29,9 @@ async function initPyodide() {
       indexURL: "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/"
     });
 
-    // Load essential packages for ML
     console.log('Loading Python packages...');
     await pyodide.loadPackage(['numpy', 'matplotlib', 'scikit-learn', 'scipy']);
 
-    // Setup matplotlib for inline plotting
     pyodide.runPython(`
 import matplotlib
 import matplotlib.pyplot as plt
@@ -41,7 +39,6 @@ matplotlib.use('AGG')
 import io, base64
 
 def _get_plot_as_base64():
-    """Helper to get current plot as base64 string."""
     if not plt.get_fignums():
         return None
     buf = io.BytesIO()
@@ -68,19 +65,16 @@ async function runPythonCode(code, outputElement, buttonElement) {
   const originalText = buttonElement.textContent;
 
   try {
-    // Show loading state
     buttonElement.textContent = '⏳ Loading Python...';
     buttonElement.disabled = true;
     outputElement.innerHTML = '';
     outputElement.className = 'code-output';
     outputElement.style.display = 'block';
 
-    // Initialize if needed
     const pyodideInstance = await initPyodide();
     
     buttonElement.textContent = '⏳ Running...';
 
-    // Redirect stdout and stderr
     pyodideInstance.runPython(`
 import sys
 from io import StringIO
@@ -88,14 +82,10 @@ sys.stdout = StringIO()
 sys.stderr = StringIO()
     `);
 
-    // Run user code
     await pyodideInstance.runPythonAsync(code);
 
-    // Get text output
     const stdout = pyodideInstance.runPython('sys.stdout.getvalue()');
     const stderr = pyodideInstance.runPython('sys.stderr.getvalue()');
-
-    // Check for plots
     const plotData = pyodideInstance.runPython('_get_plot_as_base64()');
 
     let output = '';
@@ -112,7 +102,6 @@ sys.stderr = StringIO()
     }
 
     if (plotData) {
-      // Display plot
       const img = document.createElement('img');
       img.src = 'data:image/png;base64,' + plotData;
       img.style.maxWidth = '100%';
@@ -135,58 +124,47 @@ sys.stderr = StringIO()
   }
 }
 
-// Add run buttons to interactive code blocks
+// Add CodeMirror editors to interactive code blocks
 function addRunButtons() {
-  // Find all python-interactive containers
-  document.querySelectorAll('.python-interactive').forEach(container => {
-    // Don't process twice
-    if (container.querySelector('.run-button')) {
+  document.querySelectorAll('.python-interactive').forEach((container, index) => {
+    if (container.querySelector('.code-editor-wrapper')) {
       return;
     }
 
-    // Find the code element inside
     const code = container.querySelector('pre code');
     if (!code) return;
 
     const pre = code.closest('pre');
     if (!pre) return;
 
-    // Get the original code text
     const originalCode = code.textContent;
 
-    // Create editable textarea
-    const textarea = document.createElement('textarea');
-    textarea.value = originalCode;
-    textarea.className = 'code-editor';
-    textarea.spellcheck = false;
-    textarea.setAttribute('autocapitalize', 'off');
-    textarea.setAttribute('autocomplete', 'off');
-    textarea.setAttribute('autocorrect', 'off');
+    // Create wrapper for CodeMirror
+    const editorWrapper = document.createElement('div');
+    editorWrapper.className = 'code-editor-wrapper';
     
-    // Auto-resize based on content
-    const lineCount = originalCode.split('\n').length;
-    textarea.rows = Math.max(lineCount, 3);
-    
+    // Create the editor container
+    const editorContainer = document.createElement('div');
+    editorContainer.className = 'code-editor-container';
+    editorContainer.id = `code-editor-${index}`;
+    editorWrapper.appendChild(editorContainer);
+
+    // Create button container
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'code-buttons';
+
     // Create run button
     const button = document.createElement('button');
     button.textContent = '▶ Run Code';
     button.className = 'run-button md-button md-button--primary';
-    button.title = 'Execute this code in your browser';
+    button.title = 'Execute this code (Ctrl+Enter)';
 
     // Create reset button
     const resetButton = document.createElement('button');
     resetButton.textContent = '↺ Reset';
     resetButton.className = 'reset-button md-button';
     resetButton.title = 'Reset to original code';
-    resetButton.onclick = () => {
-      textarea.value = originalCode;
-      // Trigger resize
-      textarea.rows = Math.max(originalCode.split('\n').length, 3);
-    };
 
-    // Create button container
-    const buttonContainer = document.createElement('div');
-    buttonContainer.className = 'code-buttons';
     buttonContainer.appendChild(button);
     buttonContainer.appendChild(resetButton);
 
@@ -195,49 +173,82 @@ function addRunButtons() {
     output.className = 'code-output';
     output.style.display = 'none';
 
-    // Add click handler for run button
-    button.onclick = async () => {
-      const codeText = textarea.value;
-      await runPythonCode(codeText, output, button);
-    };
-
-    // Handle tab key in textarea
-    textarea.addEventListener('keydown', (e) => {
-      if (e.key === 'Tab') {
-        e.preventDefault();
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        textarea.value = textarea.value.substring(0, start) + '    ' + textarea.value.substring(end);
-        textarea.selectionStart = textarea.selectionEnd = start + 4;
-      }
-      // Ctrl/Cmd + Enter to run
-      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        button.click();
-      }
-    });
-
-    // Auto-resize textarea on input
-    textarea.addEventListener('input', () => {
-      const lines = textarea.value.split('\n').length;
-      textarea.rows = Math.max(lines, 3);
-    });
-
-    // Hide the original code block and insert our editable version
+    // Hide original and insert new elements
     const highlightDiv = pre.parentElement;
     highlightDiv.style.display = 'none';
     
-    highlightDiv.after(textarea);
-    textarea.after(buttonContainer);
+    highlightDiv.after(editorWrapper);
+    editorWrapper.after(buttonContainer);
     buttonContainer.after(output);
+
+    // Initialize CodeMirror
+    const isDark = document.documentElement.getAttribute('data-md-color-scheme') === 'slate';
+    const editor = CodeMirror(editorContainer, {
+      value: originalCode,
+      mode: 'python',
+      theme: isDark ? 'material-darker' : 'default',
+      lineNumbers: true,
+      indentUnit: 4,
+      tabSize: 4,
+      indentWithTabs: false,
+      lineWrapping: true,
+      matchBrackets: true,
+      autoCloseBrackets: true,
+      extraKeys: {
+        'Ctrl-Enter': () => button.click(),
+        'Cmd-Enter': () => button.click(),
+        'Tab': (cm) => {
+          if (cm.somethingSelected()) {
+            cm.indentSelection('add');
+          } else {
+            cm.replaceSelection('    ', 'end');
+          }
+        }
+      }
+    });
+
+    // Store editor reference
+    codeMirrorEditors.set(container, editor);
+
+    // Button handlers
+    button.onclick = async () => {
+      const codeText = editor.getValue();
+      await runPythonCode(codeText, output, button);
+    };
+
+    resetButton.onclick = () => {
+      editor.setValue(originalCode);
+    };
+
+    // Refresh editor when it becomes visible
+    setTimeout(() => editor.refresh(), 100);
   });
 }
 
-// Initialize when DOM is ready
+// Update CodeMirror themes when color scheme changes
+function updateEditorThemes() {
+  const isDark = document.documentElement.getAttribute('data-md-color-scheme') === 'slate';
+  const theme = isDark ? 'material-darker' : 'default';
+  
+  codeMirrorEditors.forEach(editor => {
+    editor.setOption('theme', theme);
+  });
+}
+
+// Watch for theme changes
+const themeObserver = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    if (mutation.attributeName === 'data-md-color-scheme') {
+      updateEditorThemes();
+    }
+  });
+});
+
+// Initialize
 function initialize() {
   addRunButtons();
+  themeObserver.observe(document.documentElement, { attributes: true });
   
-  // Material for MkDocs uses instant navigation
   if (typeof document$ !== 'undefined') {
     document$.subscribe(() => {
       setTimeout(addRunButtons, 100);
@@ -251,7 +262,6 @@ if (document.readyState === 'loading') {
   initialize();
 }
 
-// Observe for dynamic content changes
 const observer = new MutationObserver((mutations) => {
   let shouldAddButtons = false;
   for (const mutation of mutations) {

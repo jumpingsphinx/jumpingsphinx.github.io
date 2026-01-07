@@ -87,12 +87,18 @@ extra:
       link: https://github.com/jumpingsphinx/jumpingsphinx.github.io
 
 extra_css:
+  - https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css
+  - https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/material-darker.min.css
   - assets/stylesheets/code-runner.css
 
 extra_javascript:
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
   - https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js
+  - https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/addon/edit/matchbrackets.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/addon/edit/closebrackets.min.js
   - assets/javascripts/pyodide-runner.js
 
 nav:
