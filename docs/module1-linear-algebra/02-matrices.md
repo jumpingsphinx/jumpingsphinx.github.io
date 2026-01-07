@@ -546,9 +546,6 @@ print(f"After rotation: {v_rot}")
 print(f"After scaling: {v_scale}")
 print(f"After shear: {v_shear}")
 
-# Configure matplotlib for browser display
-plt.ioff()  # Turn off interactive mode
-
 # Plot transformations
 fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
@@ -581,9 +578,7 @@ for ax, (v_transformed, title, matrix) in zip(axes, transformations):
     ax.set_ylabel('y')
 
 plt.tight_layout()
-# Display the figure (works in browser-based Python environments)
-display(fig)
-plt.close()  # Clean up
+fig  # Display the figure in browser
 
 print("\n🎨 Try changing the vector v or the transformation matrices!")
 ```

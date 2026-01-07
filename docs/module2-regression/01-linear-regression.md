@@ -22,11 +22,7 @@ Or in vector notation:
 
 $$\hat{y} = \mathbf{w}^T \mathbf{x} + b = \mathbf{x}^T \mathbf{w} + b$$
 
-where:
-- $\hat{y}$: Predicted value
-- $\mathbf{x} = [x_1, x_2, \ldots, x_n]^T$: Feature vector
-- $\mathbf{w} = [w_1, w_2, \ldots, w_n]^T$: Weight vector (parameters to learn)
-- $b$ (or $w_0$): Bias term (intercept)
+where $\hat{y}$ is the predicted value, $\mathbf{x} = [x_1, x_2, \ldots, x_n]^T$ is the feature vector, $\mathbf{w} = [w_1, w_2, \ldots, w_n]^T$ is the weight vector (parameters to learn), and $b$ (or $w_0$) is the bias term (intercept).
 
 ### The Goal
 
@@ -89,10 +85,7 @@ The most common choice is **Mean Squared Error (MSE)**:
 
 $$J(w, b) = \frac{1}{m} \sum_{i=1}^{m} (y^{(i)} - \hat{y}^{(i)})^2 = \frac{1}{m} \sum_{i=1}^{m} (y^{(i)} - (wx^{(i)} + b))^2$$
 
-where:
-- $m$: Number of training examples
-- $y^{(i)}$: Actual value for example $i$
-- $\hat{y}^{(i)}$: Predicted value for example $i$
+where $m$ is the number of training examples, $y^{(i)}$ is the actual value for example $i$, and $\hat{y}^{(i)}$ is the predicted value for example $i$.
 
 !!! info "Why Squared Error?"
     - **Squaring** makes all errors positive (no cancellation)
