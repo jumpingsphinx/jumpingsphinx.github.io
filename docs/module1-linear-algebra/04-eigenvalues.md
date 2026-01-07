@@ -10,6 +10,14 @@ Eigenvalues and eigenvectors are among the **most profound concepts** in linear 
 - **Quantum mechanics** - describing particle states
 - **Stability analysis** - understanding dynamic systems
 
+### Visual Introduction to Eigenvectors and Eigenvalues
+
+Before diving into the mathematics, watch this excellent visual explanation that builds intuition for what eigenvectors and eigenvalues really mean:
+
+<div style="text-align: center; margin: 20px 0;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PFDu9oVAE-g" title="Eigenvectors and eigenvalues" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 ## What Are Eigenvalues and Eigenvectors?
 
 ### The Definition
@@ -1201,6 +1209,14 @@ print(f"\nSame up to sign? {np.allclose(np.abs(eigenvectors[:, 0]), np.abs(VT[0]
     - Choose number of components based on explained variance
     - Visualize explained variance with a scree plot
     - Remember: PCA is sensitive to outliers
+
+## Bonus: Abstract Vector Spaces
+
+Want to take your understanding to the next level? This optional video explores how eigenvectors and change of basis work in higher-dimensional and abstract vector spaces:
+
+<div style="text-align: center; margin: 20px 0;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TgKwz5Ikpc8" title="Abstract vector spaces" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 ## Next Steps
 

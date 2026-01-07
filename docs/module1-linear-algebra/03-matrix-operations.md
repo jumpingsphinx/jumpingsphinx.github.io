@@ -103,6 +103,14 @@ The **determinant** is a scalar value that encodes important information about a
 2. **How much the matrix scales volumes** (area in 2D, volume in 3D)
 3. **Whether the transformation preserves orientation** (sign of det)
 
+### Visual Understanding of the Determinant
+
+Before diving into the calculations, watch this intuitive explanation of what the determinant really represents geometrically:
+
+<div style="text-align: center; margin: 20px 0;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Ip3X9LOh2dk" title="The determinant" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 ### Geometric Interpretation
 
 For a 2×2 matrix representing a transformation, $|\det(A)|$ is the **area scaling factor**. For 3×3, it's the **volume scaling factor**.
@@ -200,6 +208,14 @@ for name, M in matrices.items():
 ## Rank and Linear Independence
 
 The **rank** of a matrix is the **number of linearly independent rows (or columns)**. It tells us the dimension of the vector space spanned by the rows/columns.
+
+### Visual Understanding of Column Space and Rank
+
+To build intuition about what rank means and how it relates to the column space of a matrix, watch this visual explanation:
+
+<div style="text-align: center; margin: 20px 0;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uQhTuRlWMxw" title="Inverse matrices, column space and null space" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 ### What Does Rank Tell Us?
 

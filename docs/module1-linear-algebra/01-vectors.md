@@ -4,6 +4,14 @@
 
 Vectors are fundamental building blocks in machine learning. Every data sample you work with is represented as a vector, and understanding how to manipulate vectors is essential for understanding ML algorithms.
 
+### Visual Introduction to Vectors
+
+Before diving into the details, watch this excellent visual introduction to understand what vectors really represent geometrically:
+
+<div style="text-align: center; margin: 20px 0;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/fNk_zzaMoSs" title="Vectors - Chapter 1, Essence of linear algebra" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 ## What is a Vector?
 
 A **vector** is an ordered list of numbers. You can think of vectors in two complementary ways:

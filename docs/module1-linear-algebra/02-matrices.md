@@ -402,6 +402,14 @@ print(f"   using just 2 matrix multiplications!")
 2. **Parallel Processing**: All samples computed simultaneously
 3. **Composability**: Stack layers by chaining matrix multiplications: $Y = X W_1 W_2 W_3 ...$
 
+### Visual Understanding of Matrix Transformations
+
+To deepen your understanding of what matrix multiplication actually does geometrically, watch this visual explanation:
+
+<div style="text-align: center; margin: 20px 0;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XkY2DOUCWMU" title="Matrix multiplication as composition" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 ### ML Application 3: Feature Transformation
 
 Transform all features at once:
@@ -597,6 +605,14 @@ print("\n🎨 Try changing the vector v or the transformation matrices!")
     - Matrix multiplication combines transformations
     - Matrix-vector product is how models make predictions
     - Matrix dimensions must be compatible for multiplication
+
+## Bonus: 3D Transformations
+
+Want to see how these concepts extend to three dimensions and beyond? This optional video visualizes linear transformations in 3D space:
+
+<div style="text-align: center; margin: 20px 0;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rHLEWRxRGiM" title="Three-dimensional linear transformations" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 ## Next Steps
 
