@@ -77,8 +77,7 @@ np.zeros(), np.ones(), np.random.rand()
 
 ## Exercise 2: Matrix Manipulations and Transformations
 
-!!! info "Coming Soon"
-    This exercise is currently being developed. Check back soon!
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module1-linear-algebra/exercise2-matrices.ipynb)
 
 **Time:** 1.5-2 hours
 
@@ -117,8 +116,7 @@ np.linalg.solve(), np.linalg.det()
 
 ## Exercise 3: PCA Implementation from Scratch
 
-!!! info "Coming Soon"
-    This exercise is currently being developed. Check back soon!
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module1-linear-algebra/exercise3-pca.ipynb)
 
 **Time:** 2-3 hours
 
@@ -171,7 +169,7 @@ After completing each exercise, review the solutions to:
 - Debug any issues
 
 !!! info "Solutions Coming Soon"
-    Solution notebooks will be added as exercises are completed. Exercise 1 solution is currently being developed.
+    Solution notebooks will be added soon. Work through the exercises independently first!
 
 !!! warning "Use Solutions Wisely"
     Try to complete exercises independently first. Looking at solutions too early prevents deep learning. Use them for verification and learning alternative approaches.
