@@ -47,6 +47,14 @@ By the end of this lesson, you will:
 
 ## PyTorch Tensors: The Foundation
 
+### Visual Introduction to PyTorch
+
+Before diving into the code, watch this practical introduction to PyTorch:
+
+<div style="text-align: center; margin: 20px 0;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/c36lUUr864M" title="PyTorch in 100 Seconds" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 Tensors are PyTorch's fundamental data structure—think of them as NumPy arrays on steroids, with GPU support and automatic differentiation.
 
 ### Creating Tensors

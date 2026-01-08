@@ -34,6 +34,14 @@ The key insight behind boosting is deceptively simple: **combine many weak learn
 
 ## Boosting vs Bagging: Fundamental Differences
 
+### Visual Introduction to Boosting
+
+Before diving into the details, watch this excellent explanation of AdaBoost and the boosting concept:
+
+<div style="text-align: center; margin: 20px 0;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/LsK-xG1cLYA" title="AdaBoost by StatQuest" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 Before diving into specific algorithms, let's understand how boosting differs from bagging (Random Forest).
 
 ### Philosophical Difference
@@ -309,6 +317,14 @@ $$L(y, f(x)) = \exp(-y f(x))$$
 This connection links AdaBoost to broader optimization frameworks and leads to Gradient Boosting.
 
 ## Gradient Boosting Machines (GBM)
+
+### Visual Introduction to Gradient Boosting
+
+For a deeper understanding of gradient boosting, watch this excellent explanation:
+
+<div style="text-align: center; margin: 20px 0;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3CC4N4z3GJc" title="Gradient Boost Part 1 by StatQuest" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 Gradient Boosting is a more general and powerful framework than AdaBoost. Instead of reweighting examples, it directly optimizes a loss function using gradient descent in function space.
 

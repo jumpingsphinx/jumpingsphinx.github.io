@@ -32,6 +32,14 @@ By the end of this lesson, you will:
 
 ## From Single Neuron to Neural Network
 
+### Visual Introduction to Neural Networks
+
+To understand how neural networks work, watch this excellent deep dive into the architecture and forward propagation:
+
+<div style="text-align: center; margin: 20px 0;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/aircAruvnKk" title="Neural Networks Part 1 by 3Blue1Brown" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 ### The Limitation of Single Neurons
 
 Recall from Lesson 1 that a single perceptron computes:

@@ -11,6 +11,14 @@ In this lesson, you'll learn how to extend linear regression to classification p
 
 ## From Regression to Classification
 
+### Visual Introduction to Logistic Regression
+
+Before diving into the details, watch this clear explanation of logistic regression:
+
+<div style="text-align: center; margin: 20px 0;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yIYKR4sgzI8" title="Logistic Regression by StatQuest" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 ### The Classification Problem
 
 In regression, we predict **continuous values** (e.g., house prices: $250,000, $300,000, $450,000).

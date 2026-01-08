@@ -69,6 +69,14 @@ For **every layer** $l$. This seems computationally expensive! Backpropagation m
 
 ## The Chain Rule: Foundation of Backpropagation
 
+### Visual Introduction to Backpropagation
+
+Before diving into the mathematics, watch this excellent visual explanation of how backpropagation computes gradients:
+
+<div style="text-align: center; margin: 20px 0;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Ilg3gGewQ5U" title="Backpropagation by 3Blue1Brown" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 ### Single Variable Chain Rule
 
 Recall from calculus: if $y = f(g(x))$, then:

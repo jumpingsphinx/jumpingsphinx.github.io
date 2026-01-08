@@ -45,6 +45,14 @@ Before diving into the mathematics, let's understand why decision trees are so p
 
 ## The Core Idea: Recursive Partitioning
 
+### Visual Introduction to Decision Trees
+
+Before diving into the mathematics, watch this excellent visual explanation of how decision trees work:
+
+<div style="text-align: center; margin: 20px 0;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7VeUPuFGJHk" title="Decision Trees by StatQuest" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 At its heart, a decision tree recursively splits the feature space into rectangular regions. Each split is chosen to maximize the "purity" of the resulting groups—we want samples in each region to be as similar as possible in terms of their target variable.
 
 ### A Simple Example

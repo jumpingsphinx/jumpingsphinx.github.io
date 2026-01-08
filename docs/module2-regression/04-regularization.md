@@ -13,6 +13,14 @@ In this lesson, you'll learn what overfitting and underfitting are, understand t
 
 ## The Problem: Overfitting and Underfitting
 
+### Visual Introduction to Regularization
+
+Before diving into the details, watch this excellent explanation of regularization and the bias-variance tradeoff:
+
+<div style="text-align: center; margin: 20px 0;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Q81RR3yKn30" title="Regularization by StatQuest" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 ### Underfitting (High Bias)
 
 **Underfitting** occurs when a model is **too simple** to capture the underlying patterns in the data.

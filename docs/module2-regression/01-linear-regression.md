@@ -14,6 +14,14 @@ In this lesson, you'll learn:
 
 ## What is Linear Regression?
 
+### Visual Introduction to Linear Regression
+
+Before diving into the mathematics, watch this excellent intuitive explanation of how linear regression works:
+
+<div style="text-align: center; margin: 20px 0;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nk2CQITm_eo" title="Linear Regression by StatQuest" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 **Linear regression** models the relationship between input features and a continuous target variable using a linear function:
 
 $$\hat{y} = w_0 + w_1 x_1 + w_2 x_2 + \cdots + w_n x_n$$
