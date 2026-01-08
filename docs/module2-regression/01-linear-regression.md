@@ -16,7 +16,7 @@ In this lesson, you'll learn:
 
 ### Visual Introduction to Linear Regression
 
-Before diving into the mathematics, watch this excellent intuitive explanation of how linear regression works:
+Before getting into the mathematics, watch this excellent intuitive explanation of how linear regression works:
 
 <div style="text-align: center; margin: 20px 0;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/nk2CQITm_eo" title="Linear Regression by StatQuest" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

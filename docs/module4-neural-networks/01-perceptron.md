@@ -1009,6 +1009,8 @@ Congratulations! You now understand the fundamental building block of neural net
 
 [Continue to Lesson 2: Feedforward Networks](02-feedforward-networks.md){ .md-button .md-button--primary }
 
+[Practice with Exercise 1: The Perceptron](exercises.md#exercise-1-the-perceptron){ .md-button }
+
 [Return to Module 4 Overview](index.md){ .md-button }
 
 ---

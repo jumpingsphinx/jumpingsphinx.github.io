@@ -8,7 +8,7 @@ In this lesson, we'll build decision trees from the ground up, understanding not
 
 ## Why Decision Trees?
 
-Before diving into the mathematics, let's understand why decision trees are so popular in practice:
+Before getting into the mathematics, let's understand why decision trees are so popular in practice:
 
 ### Advantages
 
@@ -47,7 +47,7 @@ Before diving into the mathematics, let's understand why decision trees are so p
 
 ### Visual Introduction to Decision Trees
 
-Before diving into the mathematics, watch this excellent visual explanation of how decision trees work:
+Before getting into the mathematics, watch this excellent visual explanation of how decision trees work:
 
 <div style="text-align: center; margin: 20px 0;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/7VeUPuFGJHk" title="Decision Trees by StatQuest" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

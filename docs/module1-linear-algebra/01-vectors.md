@@ -6,7 +6,7 @@ Vectors are fundamental building blocks in machine learning. Every data sample y
 
 ### Visual Introduction to Vectors
 
-Before diving into the details, watch this excellent visual introduction to understand what vectors really represent geometrically:
+Before getting into the details, watch this excellent visual introduction to understand what vectors really represent geometrically:
 
 <div style="text-align: center; margin: 20px 0;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/fNk_zzaMoSs" title="Vectors - Chapter 1, Essence of linear algebra" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

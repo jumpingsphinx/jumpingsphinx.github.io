@@ -1870,6 +1870,8 @@ You've built a complete neural network library from scratch! You now understand 
 
 [Continue to Lesson 5: PyTorch Basics](05-pytorch-basics.md){ .md-button .md-button--primary }
 
+[Practice with Exercise 4: NumPy Implementation](exercises.md#exercise-4-numpy-neural-network-implementation){ .md-button }
+
 [Return to Module 4 Overview](index.md){ .md-button }
 
 ---

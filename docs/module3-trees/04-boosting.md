@@ -36,13 +36,13 @@ The key insight behind boosting is deceptively simple: **combine many weak learn
 
 ### Visual Introduction to Boosting
 
-Before diving into the details, watch this excellent explanation of AdaBoost and the boosting concept:
+Before getting into the details, watch this excellent explanation of AdaBoost and the boosting concept:
 
 <div style="text-align: center; margin: 20px 0;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/LsK-xG1cLYA" title="AdaBoost by StatQuest" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-Before diving into specific algorithms, let's understand how boosting differs from bagging (Random Forest).
+Before getting into specific algorithms, let's understand how boosting differs from bagging (Random Forest).
 
 ### Philosophical Difference
 

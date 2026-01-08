@@ -13,7 +13,7 @@ In this lesson, you'll learn how gradient descent works from the ground up, impl
 
 ### Visual Introduction to Gradient Descent
 
-Before diving into the mathematics, watch this excellent visual explanation of how gradient descent works:
+Before getting into the mathematics, watch this excellent visual explanation of how gradient descent works:
 
 <div style="text-align: center; margin: 20px 0;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/sDv4f4s2SB8" title="Gradient Descent by 3Blue1Brown" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

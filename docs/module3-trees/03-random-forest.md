@@ -36,13 +36,13 @@ The key innovation of Random Forest is its use of **randomness at multiple level
 
 ### Visual Introduction to Random Forest
 
-Before diving into the details, watch this excellent explanation of how Random Forest works:
+Before getting into the details, watch this excellent explanation of how Random Forest works:
 
 <div style="text-align: center; margin: 20px 0;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/J4Wdy0Wc_xQ" title="Random Forest by StatQuest" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-Before diving into Random Forest specifically, let's understand the fundamental principle that makes it work: **ensemble learning**.
+Before getting into Random Forest specifically, let's understand the fundamental principle that makes it work: **ensemble learning**.
 
 ### The Wisdom of Crowds
 

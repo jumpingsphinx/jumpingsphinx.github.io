@@ -997,6 +997,8 @@ This is where the magic happens!
 
 [Continue to Lesson 3: Backpropagation](03-backpropagation.md){ .md-button .md-button--primary }
 
+[Practice with Exercise 2: Feedforward Networks](exercises.md#exercise-2-feedforward-neural-networks){ .md-button }
+
 [Return to Module 4 Overview](index.md){ .md-button }
 
 ---

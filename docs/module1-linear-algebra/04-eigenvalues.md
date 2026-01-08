@@ -12,7 +12,7 @@ Eigenvalues and eigenvectors are among the **most profound concepts** in linear 
 
 ### Visual Introduction to Eigenvectors and Eigenvalues
 
-Before diving into the mathematics, watch this excellent visual explanation that builds intuition for what eigenvectors and eigenvalues really mean:
+Before getting into the mathematics, watch this excellent visual explanation that builds intuition for what eigenvectors and eigenvalues really mean:
 
 <div style="text-align: center; margin: 20px 0;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/PFDu9oVAE-g" title="Eigenvectors and eigenvalues" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

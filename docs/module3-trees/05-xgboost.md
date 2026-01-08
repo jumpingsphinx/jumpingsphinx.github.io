@@ -47,13 +47,13 @@ The "extreme" in XGBoost comes from multiple innovations:
 
 ### Visual Introduction to XGBoost
 
-Before diving into the details, watch this excellent explanation of XGBoost:
+Before getting into the details, watch this excellent explanation of XGBoost:
 
 <div style="text-align: center; margin: 20px 0;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/OtD8wVaFm6E" title="XGBoost by StatQuest" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-Before diving into XGBoost specifics, let's understand what it improves over standard gradient boosting.
+Before getting into XGBoost specifics, let's understand what it improves over standard gradient boosting.
 
 ### Regularized Objective Function
 
