@@ -45,7 +45,7 @@ Each exercise includes:
 
 ## Exercise 1: The Perceptron
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise1-perceptron.ipynb)
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise1-perceptron.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 **Time:** 1.5-2 hours
 
@@ -93,7 +93,7 @@ Each exercise includes:
 
 ## Exercise 2: Feedforward Neural Networks
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise2-feedforward-networks.ipynb)
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise2-feedforward-networks.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 **Time:** 2-3 hours
 
@@ -136,7 +136,7 @@ Each exercise includes:
 
 ## Exercise 3: Backpropagation
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise3-backpropagation.ipynb)
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise3-backpropagation.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 **Time:** 3-4 hours
 
@@ -180,7 +180,7 @@ Each exercise includes:
 
 ## Exercise 4: NumPy Neural Network Implementation
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise4-numpy-implementation.ipynb)
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise4-numpy-implementation.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 **Time:** 3-4 hours
 
@@ -223,7 +223,7 @@ Each exercise includes:
 
 ## Exercise 5: PyTorch Basics
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise5-pytorch-basics.ipynb)
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise5-pytorch-basics.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 **Time:** 2-3 hours
 
@@ -260,7 +260,7 @@ Each exercise includes:
 
 ## Exercise 6: PyTorch Advanced Topics
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise6-pytorch-advanced.ipynb)
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise6-pytorch-advanced.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 **Time:** 3-4 hours
 

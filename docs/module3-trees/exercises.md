@@ -50,7 +50,7 @@ Each exercise notebook contains:
 - Visualize tree structure and decision boundaries
 - Compare depth vs performance
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/exercise1-decision-trees.ipynb)
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/exercise1-decision-trees.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 ---
 
@@ -75,7 +75,7 @@ Each exercise notebook contains:
 - Compare algorithm performance
 - Handle missing values in tree construction
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/exercise2-tree-algorithms.ipynb)
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/exercise2-tree-algorithms.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 ---
 
@@ -102,7 +102,7 @@ Each exercise notebook contains:
 - Tune Random Forest hyperparameters
 - Handle imbalanced data
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/exercise3-random-forest.ipynb)
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/exercise3-random-forest.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 ---
 
@@ -129,7 +129,7 @@ Each exercise notebook contains:
 - Compare AdaBoost, Gradient Boosting, and Random Forest
 - Tune boosting hyperparameters
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/exercise4-boosting.ipynb)
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/exercise4-boosting.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 ---
 
@@ -158,7 +158,7 @@ Each exercise notebook contains:
 - Save and deploy models
 - Build a complete ML pipeline
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/exercise5-xgboost.ipynb)
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/exercise5-xgboost.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 ---
 
