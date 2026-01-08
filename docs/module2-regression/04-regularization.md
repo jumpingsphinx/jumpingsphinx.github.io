@@ -1182,13 +1182,20 @@ degree = 10
 X_train_poly = polynomial_features(X_train, degree)
 X_test_poly = polynomial_features(X_test, degree)
 
+# IMPORTANT: Scale features to prevent numerical instability!
+# High-degree polynomials have huge values (x^10 can be enormous)
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X_train_poly = scaler.fit_transform(X_train_poly)
+X_test_poly = scaler.transform(X_test_poly)
+
 print(f"Polynomial Regression with degree {degree}")
 print(f"Training samples: {len(X_train)}")
 print(f"Number of features: {degree}")
 print(f"High-degree polynomial is prone to overfitting!\n")
 
 # Simplified implementations for illustration
-def fit_linear(X, y, lambda_l2=0, lambda_l1=0, lr=0.001, iterations=2000):
+def fit_linear(X, y, lambda_l2=0, lambda_l1=0, lr=0.01, iterations=3000):
     """Fit with optional L1 and L2 regularization."""
     m, n = X.shape
     w = np.zeros(n)

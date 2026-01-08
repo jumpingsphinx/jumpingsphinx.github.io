@@ -699,19 +699,36 @@ Let's apply everything to a real dataset:
 <div class="python-interactive" markdown="1">
 ```python
 import numpy as np
-from sklearn.datasets import fetch_california_housing
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, r2_score
 import matplotlib.pyplot as plt
 
-# Load data
-housing = fetch_california_housing()
-X, y = housing.data, housing.target
-feature_names = housing.feature_names
+# Create synthetic California-like housing data
+np.random.seed(42)
+n_samples = 5000
 
-print("=== California Housing Dataset ===")
+# Generate synthetic features (matching California Housing dataset structure)
+feature_names = ['MedInc', 'HouseAge', 'AveRooms', 'AveBedrms',
+                 'Population', 'AveOccup', 'Latitude', 'Longitude']
+
+# Create correlated features
+X = np.random.randn(n_samples, len(feature_names))
+X[:, 0] = np.abs(X[:, 0]) * 2 + 3  # MedInc: 1-10
+X[:, 1] = np.abs(X[:, 1]) * 15 + 20  # HouseAge: 1-52
+X[:, 2] = np.abs(X[:, 2]) * 2 + 5  # AveRooms: 2-10
+X[:, 3] = np.abs(X[:, 3]) * 0.5 + 1  # AveBedrms: 0.5-3
+
+# Generate target with realistic relationship
+y = (0.8 * X[:, 0] +  # Income is most important
+     0.1 * X[:, 1] +   # Age
+     0.2 * X[:, 2] -   # Rooms (positive)
+     0.1 * X[:, 3] +   # Bedrooms (negative)
+     np.random.randn(n_samples) * 0.5 + 2)  # Base price + noise
+y = np.clip(y, 0.5, 5.0)  # Keep in realistic range
+
+print("=== California Housing Dataset (Synthetic) ===")
 print(f"Features: {feature_names}")
 print(f"Samples: {X.shape[0]}")
 print(f"Features: {X.shape[1]}")
