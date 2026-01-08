@@ -726,45 +726,47 @@ Let's apply decision trees to a real problem: predicting Titanic passenger survi
 <div class="python-interactive" markdown="1">
 ```python
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-import seaborn as sns
 
 # Create a simplified Titanic-like dataset
 np.random.seed(42)
 n_samples = 500
 
-data = {
-    'Age': np.random.randint(1, 80, n_samples),
-    'Fare': np.random.exponential(30, n_samples),
-    'Sex': np.random.choice([0, 1], n_samples),  # 0: male, 1: female
-    'Pclass': np.random.choice([1, 2, 3], n_samples),  # Ticket class
-}
+# Generate features
+Age = np.random.randint(1, 80, n_samples)
+Fare = np.random.exponential(30, n_samples)
+Sex = np.random.choice([0, 1], n_samples)  # 0: male, 1: female
+Pclass = np.random.choice([1, 2, 3], n_samples)  # Ticket class
 
 # Create survival based on rules (women and children first, higher class better)
-df = pd.DataFrame(data)
-survival_prob = 0.2  # Base survival rate
+survival_prob = np.full(n_samples, 0.2)  # Base survival rate
 
 # Adjust based on features
-survival_prob += (df['Sex'] == 1) * 0.5  # Women more likely to survive
-survival_prob += (df['Age'] < 16) * 0.3  # Children more likely
-survival_prob -= (df['Pclass'] == 3) * 0.2  # Third class less likely
+survival_prob += (Sex == 1) * 0.5  # Women more likely to survive
+survival_prob += (Age < 16) * 0.3  # Children more likely
+survival_prob -= (Pclass == 3) * 0.2  # Third class less likely
 survival_prob = np.clip(survival_prob, 0, 1)
 
-df['Survived'] = (np.random.random(n_samples) < survival_prob).astype(int)
-
-print("Dataset Overview:")
-print(df.head())
-print("\nSurvival Rate:", df['Survived'].mean())
-print("\nClass Distribution:")
-print(df.groupby('Survived').size())
+Survived = (np.random.random(n_samples) < survival_prob).astype(int)
 
 # Prepare data
-X = df[['Age', 'Fare', 'Sex', 'Pclass']].values
-y = df['Survived'].values
+X = np.column_stack([Age, Fare, Sex, Pclass])
+y = Survived
+
+print("Dataset Overview:")
+print("First 5 samples:")
+print("Age | Fare  | Sex | Class | Survived")
+print("-" * 40)
+for i in range(5):
+    print(f"{Age[i]:3d} | {Fare[i]:5.1f} | {Sex[i]:3d} | {Pclass[i]:5d} | {Survived[i]:8d}")
+
+print(f"\nSurvival Rate: {y.mean():.3f}")
+print(f"\nClass Distribution:")
+print(f"  Died: {np.sum(y == 0)}")
+print(f"  Survived: {np.sum(y == 1)}")
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
@@ -802,10 +804,19 @@ plt.show()
 # Confusion matrix
 cm = confusion_matrix(y_test, y_pred)
 plt.figure(figsize=(8, 6))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+plt.imshow(cm, interpolation='nearest', cmap='Blues')
+plt.colorbar()
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
 plt.title('Confusion Matrix')
+
+# Add text annotations
+for i in range(cm.shape[0]):
+    for j in range(cm.shape[1]):
+        plt.text(j, i, str(cm[i, j]), ha='center', va='center', color='black')
+
+plt.xticks([0, 1], ['Died', 'Survived'])
+plt.yticks([0, 1], ['Died', 'Survived'])
 plt.show()
 ```
 </div>

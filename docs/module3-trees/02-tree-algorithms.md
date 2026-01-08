@@ -198,7 +198,6 @@ The tree continues to grow by selecting the best attribute at each node until we
 <div class="python-interactive" markdown="1">
 ```python
 import numpy as np
-import pandas as pd
 from collections import Counter
 
 class ID3Node:
@@ -221,43 +220,59 @@ def entropy(labels):
     entropy_val = -np.sum(probabilities * np.log2(probabilities + 1e-10))
     return entropy_val
 
+def get_column(data, col_name):
+    """Extract a column from data dictionary."""
+    return [row[col_name] for row in data]
+
+def filter_data(data, attribute, value):
+    """Filter data where attribute equals value."""
+    return [row for row in data if row[attribute] == value]
+
 def information_gain(data, attribute, target):
     """
     Calculate information gain from splitting on an attribute.
 
     Args:
-        data: DataFrame with examples
-        attribute: Column name to split on
-        target: Target column name
+        data: List of dictionaries (each dictionary is one example)
+        attribute: Attribute name to split on
+        target: Target attribute name
 
     Returns:
         Information gain value
     """
     # Total entropy
-    total_entropy = entropy(data[target])
+    target_values = get_column(data, target)
+    total_entropy = entropy(target_values)
 
     # Weighted average entropy after split
-    values = data[attribute].unique()
+    attr_values = get_column(data, attribute)
+    unique_values = list(set(attr_values))
     weighted_entropy = 0
 
-    for value in values:
-        subset = data[data[attribute] == value]
+    for value in unique_values:
+        subset = filter_data(data, attribute, value)
         weight = len(subset) / len(data)
-        weighted_entropy += weight * entropy(subset[target])
+        subset_targets = get_column(subset, target)
+        weighted_entropy += weight * entropy(subset_targets)
 
     # Information gain
     ig = total_entropy - weighted_entropy
     return ig
 
-def id3(data, attributes, target, default_class=None):
+def majority_class(data, target):
+    """Return most common class in data."""
+    targets = get_column(data, target)
+    counts = Counter(targets)
+    return counts.most_common(1)[0][0]
+
+def id3(data, attributes, target):
     """
     Build decision tree using ID3 algorithm.
 
     Args:
-        data: Training data (DataFrame)
+        data: Training data (list of dictionaries)
         attributes: List of attribute names to consider
         target: Target attribute name
-        default_class: Default class for empty subsets
 
     Returns:
         ID3Node representing the tree
@@ -265,18 +280,19 @@ def id3(data, attributes, target, default_class=None):
     node = ID3Node()
 
     # Get target values
-    targets = data[target]
+    targets = get_column(data, target)
+    unique_targets = list(set(targets))
 
     # If all examples have same class, return leaf
-    if len(targets.unique()) == 1:
+    if len(unique_targets) == 1:
         node.is_leaf = True
-        node.label = targets.iloc[0]
+        node.label = targets[0]
         return node
 
     # If no attributes left, return leaf with majority class
     if len(attributes) == 0:
         node.is_leaf = True
-        node.label = targets.mode()[0]  # Most common class
+        node.label = majority_class(data, target)
         return node
 
     # Choose best attribute
@@ -286,15 +302,18 @@ def id3(data, attributes, target, default_class=None):
     node.attribute = best_attribute
 
     # Create branches for each value of best attribute
-    for value in data[best_attribute].unique():
+    attr_values = get_column(data, best_attribute)
+    unique_values = list(set(attr_values))
+
+    for value in unique_values:
         # Get subset where attribute = value
-        subset = data[data[best_attribute] == value]
+        subset = filter_data(data, best_attribute, value)
 
         if len(subset) == 0:
             # Empty subset: create leaf with majority class
             child = ID3Node()
             child.is_leaf = True
-            child.label = targets.mode()[0]
+            child.label = majority_class(data, target)
             node.children[value] = child
         else:
             # Recursively build subtree
@@ -305,7 +324,7 @@ def id3(data, attributes, target, default_class=None):
     return node
 
 def predict_id3(tree, sample):
-    """Make prediction for a single sample."""
+    """Make prediction for a single sample (dictionary)."""
     if tree.is_leaf:
         return tree.label
 
@@ -316,8 +335,7 @@ def predict_id3(tree, sample):
     if attr_value in tree.children:
         return predict_id3(tree.children[attr_value], sample)
     else:
-        # Value not seen in training: return majority class
-        # (In practice, we'd handle this more carefully)
+        # Value not seen in training: return None
         return None
 
 def print_tree(tree, indent=0, value="Root"):
@@ -331,20 +349,23 @@ def print_tree(tree, indent=0, value="Root"):
         for attr_value, child in tree.children.items():
             print_tree(child, indent + 1, f"{tree.attribute}={attr_value}")
 
-# Tennis example dataset
-tennis_data = pd.DataFrame({
-    'Outlook': ['Sunny', 'Sunny', 'Overcast', 'Rainy', 'Rainy', 'Rainy',
-                'Overcast', 'Sunny', 'Sunny', 'Rainy', 'Sunny', 'Overcast',
-                'Overcast', 'Rainy'],
-    'Temperature': ['Hot', 'Hot', 'Hot', 'Mild', 'Cool', 'Cool', 'Cool',
-                    'Mild', 'Cool', 'Mild', 'Mild', 'Mild', 'Hot', 'Mild'],
-    'Humidity': ['High', 'High', 'High', 'High', 'Normal', 'Normal', 'Normal',
-                 'High', 'Normal', 'Normal', 'Normal', 'High', 'Normal', 'High'],
-    'Windy': [False, True, False, False, False, True, True, False, False,
-              False, True, True, False, True],
-    'PlayTennis': ['No', 'No', 'Yes', 'Yes', 'Yes', 'No', 'Yes', 'No',
-                   'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'No']
-})
+# Tennis example dataset (as list of dictionaries)
+tennis_data = [
+    {'Outlook': 'Sunny', 'Temperature': 'Hot', 'Humidity': 'High', 'Windy': False, 'PlayTennis': 'No'},
+    {'Outlook': 'Sunny', 'Temperature': 'Hot', 'Humidity': 'High', 'Windy': True, 'PlayTennis': 'No'},
+    {'Outlook': 'Overcast', 'Temperature': 'Hot', 'Humidity': 'High', 'Windy': False, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Rainy', 'Temperature': 'Mild', 'Humidity': 'High', 'Windy': False, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Rainy', 'Temperature': 'Cool', 'Humidity': 'Normal', 'Windy': False, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Rainy', 'Temperature': 'Cool', 'Humidity': 'Normal', 'Windy': True, 'PlayTennis': 'No'},
+    {'Outlook': 'Overcast', 'Temperature': 'Cool', 'Humidity': 'Normal', 'Windy': True, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Sunny', 'Temperature': 'Mild', 'Humidity': 'High', 'Windy': False, 'PlayTennis': 'No'},
+    {'Outlook': 'Sunny', 'Temperature': 'Cool', 'Humidity': 'Normal', 'Windy': False, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Rainy', 'Temperature': 'Mild', 'Humidity': 'Normal', 'Windy': False, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Sunny', 'Temperature': 'Mild', 'Humidity': 'Normal', 'Windy': True, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Overcast', 'Temperature': 'Mild', 'Humidity': 'High', 'Windy': True, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Overcast', 'Temperature': 'Hot', 'Humidity': 'Normal', 'Windy': False, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Rainy', 'Temperature': 'Mild', 'Humidity': 'High', 'Windy': True, 'PlayTennis': 'No'},
+]
 
 # Build tree
 attributes = ['Outlook', 'Temperature', 'Humidity', 'Windy']
@@ -361,17 +382,20 @@ for attr in attributes:
     ig = information_gain(tennis_data, attr, 'PlayTennis')
     print(f"  {attr}: {ig:.4f}")
 
-# Test prediction
-test_sample = pd.Series({
-    'Outlook': 'Sunny',
-    'Temperature': 'Cool',
-    'Humidity': 'High',
-    'Windy': False
-})
+# Test predictions
+print("\n" + "=" * 60)
+print("Test Predictions:")
 
-prediction = predict_id3(tree, test_sample)
-print(f"\nTest prediction for {test_sample.to_dict()}:")
-print(f"  Predicted: {prediction}")
+test_samples = [
+    {'Outlook': 'Sunny', 'Temperature': 'Cool', 'Humidity': 'High', 'Windy': True},
+    {'Outlook': 'Rainy', 'Temperature': 'Mild', 'Humidity': 'Normal', 'Windy': False},
+    {'Outlook': 'Overcast', 'Temperature': 'Hot', 'Humidity': 'High', 'Windy': False},
+]
+
+for i, sample in enumerate(test_samples, 1):
+    pred = predict_id3(tree, sample)
+    print(f"Sample {i}: {sample}")
+    print(f"  Prediction: {pred}\n")
 ```
 </div>
 
@@ -564,7 +588,7 @@ For a test example with missing value:
 <div class="python-interactive" markdown="1">
 ```python
 import numpy as np
-import pandas as pd
+from collections import Counter
 
 def split_info(data, attribute):
     """
@@ -573,8 +597,11 @@ def split_info(data, attribute):
     Split info measures how evenly the split divides the data.
     High split info = many small subsets (penalized)
     """
-    values = data[attribute].value_counts()
-    proportions = values / len(data)
+    attr_values = get_column(data, attribute)
+    counts = Counter(attr_values)
+    total = len(data)
+
+    proportions = np.array([count / total for count in counts.values()])
 
     # SplitInfo = -sum(p_i * log2(p_i))
     split_info_val = -np.sum(proportions * np.log2(proportions + 1e-10))
@@ -603,9 +630,9 @@ def discretize_continuous(data, attribute, target):
         best_threshold, best_gain_ratio
     """
     # Sort by attribute value
-    sorted_data = data.sort_values(by=attribute)
-    values = sorted_data[attribute].values
-    labels = sorted_data[target].values
+    sorted_data = sorted(data, key=lambda x: x[attribute])
+    values = [row[attribute] for row in sorted_data]
+    labels = [row[target] for row in sorted_data]
 
     best_threshold = None
     best_gr = -np.inf
@@ -617,11 +644,14 @@ def discretize_continuous(data, attribute, target):
             threshold = (values[i] + values[i+1]) / 2
 
             # Create binary split
-            data_copy = data.copy()
-            data_copy['_binary_split'] = data[attribute] <= threshold
+            data_with_split = []
+            for row in data:
+                new_row = row.copy()
+                new_row['_binary_split'] = row[attribute] <= threshold
+                data_with_split.append(new_row)
 
             # Calculate gain ratio for this split
-            gr = gain_ratio(data_copy, '_binary_split', target)
+            gr = gain_ratio(data_with_split, '_binary_split', target)
 
             if gr > best_gr:
                 best_gr = gr
@@ -630,16 +660,22 @@ def discretize_continuous(data, attribute, target):
     return best_threshold, best_gr
 
 # Example: Compare information gain vs gain ratio
-tennis_data = pd.DataFrame({
-    'Outlook': ['Sunny', 'Sunny', 'Overcast', 'Rainy', 'Rainy', 'Rainy',
-                'Overcast', 'Sunny', 'Sunny', 'Rainy', 'Sunny', 'Overcast',
-                'Overcast', 'Rainy'],
-    'Temperature': ['Hot', 'Hot', 'Hot', 'Mild', 'Cool', 'Cool', 'Cool',
-                    'Mild', 'Cool', 'Mild', 'Mild', 'Mild', 'Hot', 'Mild'],
-    'Day': range(1, 15),  # Unique ID for each sample
-    'PlayTennis': ['No', 'No', 'Yes', 'Yes', 'Yes', 'No', 'Yes', 'No',
-                   'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'No']
-})
+tennis_data = [
+    {'Outlook': 'Sunny', 'Temperature': 'Hot', 'Day': 1, 'PlayTennis': 'No'},
+    {'Outlook': 'Sunny', 'Temperature': 'Hot', 'Day': 2, 'PlayTennis': 'No'},
+    {'Outlook': 'Overcast', 'Temperature': 'Hot', 'Day': 3, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Rainy', 'Temperature': 'Mild', 'Day': 4, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Rainy', 'Temperature': 'Cool', 'Day': 5, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Rainy', 'Temperature': 'Cool', 'Day': 6, 'PlayTennis': 'No'},
+    {'Outlook': 'Overcast', 'Temperature': 'Cool', 'Day': 7, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Sunny', 'Temperature': 'Mild', 'Day': 8, 'PlayTennis': 'No'},
+    {'Outlook': 'Sunny', 'Temperature': 'Cool', 'Day': 9, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Rainy', 'Temperature': 'Mild', 'Day': 10, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Sunny', 'Temperature': 'Mild', 'Day': 11, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Overcast', 'Temperature': 'Mild', 'Day': 12, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Overcast', 'Temperature': 'Hot', 'Day': 13, 'PlayTennis': 'Yes'},
+    {'Outlook': 'Rainy', 'Temperature': 'Mild', 'Day': 14, 'PlayTennis': 'No'},
+]
 
 print("Comparing Information Gain vs Gain Ratio:")
 print("=" * 70)
@@ -662,10 +698,18 @@ print("  - High split info (penalty for fragmenting data)")
 print("  - Lower gain ratio (C4.5 avoids this attribute)")
 
 # Example: Continuous attribute handling
-continuous_data = pd.DataFrame({
-    'Temperature': [64, 65, 68, 69, 70, 71, 72, 75, 80, 85],
-    'PlayTennis': ['No', 'No', 'Yes', 'Yes', 'Yes', 'Yes', 'No', 'Yes', 'No', 'No']
-})
+continuous_data = [
+    {'Temperature': 64, 'PlayTennis': 'No'},
+    {'Temperature': 65, 'PlayTennis': 'No'},
+    {'Temperature': 68, 'PlayTennis': 'Yes'},
+    {'Temperature': 69, 'PlayTennis': 'Yes'},
+    {'Temperature': 70, 'PlayTennis': 'Yes'},
+    {'Temperature': 71, 'PlayTennis': 'Yes'},
+    {'Temperature': 72, 'PlayTennis': 'No'},
+    {'Temperature': 75, 'PlayTennis': 'Yes'},
+    {'Temperature': 80, 'PlayTennis': 'No'},
+    {'Temperature': 85, 'PlayTennis': 'No'},
+]
 
 threshold, gr = discretize_continuous(continuous_data, 'Temperature', 'PlayTennis')
 print(f"\nBest threshold for Temperature: {threshold:.1f}")
@@ -1116,13 +1160,11 @@ predictions = tree.predict(X_new)  # Returns (n_samples, n_outputs)
 <div class="python-interactive" markdown="1">
 ```python
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.metrics import classification_report, confusion_matrix
-import seaborn as sns
 
 # Load dataset
 wine = load_wine()
@@ -1222,12 +1264,20 @@ y_pred = best_model.predict(X_test)
 cm = confusion_matrix(y_test, y_pred)
 
 plt.figure(figsize=(8, 6))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
-            xticklabels=target_names,
-            yticklabels=target_names)
+plt.imshow(cm, interpolation='nearest', cmap='Blues')
+plt.colorbar()
 plt.xlabel('Predicted')
 plt.ylabel('True')
 plt.title('Confusion Matrix')
+
+# Add text annotations
+for i in range(cm.shape[0]):
+    for j in range(cm.shape[1]):
+        plt.text(j, i, str(cm[i, j]), ha='center', va='center', color='black')
+
+plt.xticks(range(len(target_names)), target_names)
+plt.yticks(range(len(target_names)), target_names)
+plt.tight_layout()
 plt.show()
 
 print("\nClassification Report:")

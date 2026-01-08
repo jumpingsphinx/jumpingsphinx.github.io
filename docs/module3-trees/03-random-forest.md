@@ -700,7 +700,6 @@ For each feature $j$:
 <div class="python-interactive" markdown="1">
 ```python
 import numpy as np
-import pandas as pd
 from sklearn.datasets import load_wine
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.inspection import permutation_importance
@@ -709,7 +708,7 @@ import matplotlib.pyplot as plt
 # Load wine dataset
 data = load_wine()
 X, y = data.data, data.target
-feature_names = data.feature_names
+feature_names = list(data.feature_names)
 
 print("Wine Classification Dataset")
 print(f"Samples: {X.shape[0]}")
@@ -730,40 +729,41 @@ print(f"\nOOB Accuracy: {rf.oob_score_:.3f}")
 mdi_importance = rf.feature_importances_
 perm_importance = permutation_importance(rf, X, y, n_repeats=10, random_state=42)
 
-# Create DataFrame for comparison
-importance_df = pd.DataFrame({
-    'Feature': feature_names,
-    'MDI (Gini)': mdi_importance,
-    'MDA (Permutation)': perm_importance.importances_mean
-})
+# Create arrays for comparison
+importance_data = np.column_stack([mdi_importance, perm_importance.importances_mean])
 
 # Sort by MDI importance
-importance_df = importance_df.sort_values('MDI (Gini)', ascending=False)
+mdi_indices = np.argsort(mdi_importance)[::-1]
+sorted_features = [feature_names[i] for i in mdi_indices]
+sorted_mdi = mdi_importance[mdi_indices]
+sorted_mda = perm_importance.importances_mean[mdi_indices]
 
 print("\n" + "="*50)
 print("Feature Importance Comparison:")
-print(importance_df.to_string(index=False))
+print(f"{'Feature':<25} {'MDI (Gini)':<15} {'MDA (Permutation)':<20}")
+print("-" * 60)
+for feat, mdi, mda in zip(sorted_features, sorted_mdi, sorted_mda):
+    print(f"{feat:<25} {mdi:<15.6f} {mda:<20.6f}")
 
 # Visualize both importance measures
 fig, axes = plt.subplots(1, 2, figsize=(15, 6))
 
 # MDI Importance
-axes[0].barh(range(len(feature_names)),
-             importance_df['MDI (Gini)'],
-             color='steelblue')
-axes[0].set_yticks(range(len(feature_names)))
-axes[0].set_yticklabels(importance_df['Feature'])
+axes[0].barh(range(len(sorted_features)), sorted_mdi, color='steelblue')
+axes[0].set_yticks(range(len(sorted_features)))
+axes[0].set_yticklabels(sorted_features)
 axes[0].set_xlabel('Importance', fontsize=11)
 axes[0].set_title('Mean Decrease in Impurity (Gini)\n(Default scikit-learn)', fontsize=12)
 axes[0].invert_yaxis()
 
-# MDA Importance
-perm_sorted = importance_df.sort_values('MDA (Permutation)', ascending=False)
-axes[1].barh(range(len(feature_names)),
-             perm_sorted['MDA (Permutation)'],
-             color='coral')
-axes[1].set_yticks(range(len(feature_names)))
-axes[1].set_yticklabels(perm_sorted['Feature'])
+# MDA Importance - sort by MDA
+mda_indices = np.argsort(perm_importance.importances_mean)[::-1]
+mda_sorted_features = [feature_names[i] for i in mda_indices]
+mda_sorted_values = perm_importance.importances_mean[mda_indices]
+
+axes[1].barh(range(len(mda_sorted_features)), mda_sorted_values, color='coral')
+axes[1].set_yticks(range(len(mda_sorted_features)))
+axes[1].set_yticklabels(mda_sorted_features)
 axes[1].set_xlabel('Importance', fontsize=11)
 axes[1].set_title('Mean Decrease in Accuracy (Permutation)\n(More reliable)', fontsize=12)
 axes[1].invert_yaxis()
@@ -776,7 +776,7 @@ print("\n" + "="*50)
 print("Feature Selection Using Importance Scores:")
 
 # Keep only top 5 features
-top_5_features = importance_df.head(5)['Feature'].tolist()
+top_5_features = sorted_features[:5]
 print(f"\nTop 5 most important features:")
 for i, feat in enumerate(top_5_features, 1):
     print(f"  {i}. {feat}")
@@ -910,13 +910,11 @@ Let's put everything together with a comprehensive real-world example.
 <div class="python-interactive" markdown="1">
 ```python
 import numpy as np
-import pandas as pd
 from sklearn.datasets import load_breast_cancer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score, roc_curve
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 # Load dataset
 data = load_breast_cancer()
@@ -996,19 +994,23 @@ print("\n" + "="*60)
 print("STEP 3: Feature Importance Analysis")
 print("="*60)
 
-importance_df = pd.DataFrame({
-    'Feature': feature_names,
-    'Importance': rf_tuned.feature_importances_
-}).sort_values('Importance', ascending=False)
+# Sort features by importance
+importance_indices = np.argsort(rf_tuned.feature_importances_)[::-1]
+sorted_features = [feature_names[i] for i in importance_indices]
+sorted_importances = rf_tuned.feature_importances_[importance_indices]
 
 print("\nTop 10 Most Important Features:")
-print(importance_df.head(10).to_string(index=False))
+print(f"{'Feature':<30} {'Importance':<10}")
+print("-" * 40)
+for i in range(10):
+    print(f"{sorted_features[i]:<30} {sorted_importances[i]:<10.6f}")
 
 # Visualize top 15 features
 plt.figure(figsize=(10, 8))
-top_15 = importance_df.head(15)
-plt.barh(range(len(top_15)), top_15['Importance'], color='steelblue')
-plt.yticks(range(len(top_15)), top_15['Feature'])
+top_15_features = sorted_features[:15]
+top_15_importances = sorted_importances[:15]
+plt.barh(range(len(top_15_features)), top_15_importances, color='steelblue')
+plt.yticks(range(len(top_15_features)), top_15_features)
 plt.xlabel('Importance', fontsize=12)
 plt.title('Top 15 Most Important Features', fontsize=14, fontweight='bold')
 plt.gca().invert_yaxis()
@@ -1034,12 +1036,20 @@ print(classification_report(y_test, y_pred,
 # Confusion matrix
 cm = confusion_matrix(y_test, y_pred)
 plt.figure(figsize=(8, 6))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
-            xticklabels=['Malignant', 'Benign'],
-            yticklabels=['Malignant', 'Benign'])
+plt.imshow(cm, interpolation='nearest', cmap='Blues')
+plt.colorbar()
 plt.ylabel('True Label', fontsize=12)
 plt.xlabel('Predicted Label', fontsize=12)
 plt.title('Confusion Matrix', fontsize=14, fontweight='bold')
+
+# Add text annotations
+for i in range(cm.shape[0]):
+    for j in range(cm.shape[1]):
+        plt.text(j, i, str(cm[i, j]), ha='center', va='center',
+                color='white' if cm[i, j] > cm.max() / 2 else 'black', fontsize=14)
+
+plt.xticks([0, 1], ['Malignant', 'Benign'])
+plt.yticks([0, 1], ['Malignant', 'Benign'])
 plt.tight_layout()
 plt.show()
 

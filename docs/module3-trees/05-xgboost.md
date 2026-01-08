@@ -402,20 +402,22 @@ Then tune from there based on validation performance.
 <div class="python-interactive" markdown="1">
 ```python
 import numpy as np
-import pandas as pd
-import xgboost as xgb
 from sklearn.datasets import load_breast_cancer
+from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score
 import matplotlib.pyplot as plt
 
+# Note: Using sklearn's GradientBoostingClassifier as XGBoost-like alternative
+# It implements gradient boosting with similar concepts
+
 # Load dataset
 data = load_breast_cancer()
 X, y = data.data, data.target
-feature_names = data.feature_names
+feature_names = list(data.feature_names)
 
 print("="*60)
-print("XGBoost: Breast Cancer Classification")
+print("Gradient Boosting: Breast Cancer Classification")
 print("="*60)
 print(f"Samples: {X.shape[0]}")
 print(f"Features: {X.shape[1]}")
@@ -428,55 +430,50 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # ============================================================
-# 1. Baseline XGBoost with default parameters
+# 1. Baseline Gradient Boosting with default parameters
 # ============================================================
 print("\n" + "="*60)
-print("STEP 1: Baseline XGBoost")
+print("STEP 1: Baseline Gradient Boosting")
 print("="*60)
 
-xgb_baseline = xgb.XGBClassifier(
+gb_baseline = GradientBoostingClassifier(
     n_estimators=100,
     learning_rate=0.1,
-    random_state=42,
-    eval_metric='logloss'
+    random_state=42
 )
 
-xgb_baseline.fit(X_train, y_train)
+gb_baseline.fit(X_train, y_train)
 
-train_acc = xgb_baseline.score(X_train, y_train)
-test_acc = xgb_baseline.score(X_test, y_test)
+train_acc = gb_baseline.score(X_train, y_train)
+test_acc = gb_baseline.score(X_test, y_test)
 
 print(f"Train Accuracy: {train_acc:.4f}")
 print(f"Test Accuracy: {test_acc:.4f}")
 
 # ============================================================
-# 2. Using early stopping with validation set
+# 2. Using validation set monitoring
 # ============================================================
 print("\n" + "="*60)
-print("STEP 2: Early Stopping")
+print("STEP 2: Validation Monitoring")
 print("="*60)
 
 X_train_sub, X_val, y_train_sub, y_val = train_test_split(
     X_train, y_train, test_size=0.2, random_state=42, stratify=y_train
 )
 
-xgb_early = xgb.XGBClassifier(
-    n_estimators=500,  # Large number
+gb_monitored = GradientBoostingClassifier(
+    n_estimators=200,
     learning_rate=0.1,
     random_state=42,
-    eval_metric='logloss',
-    early_stopping_rounds=20
+    validation_fraction=0.2,
+    n_iter_no_change=20,
+    tol=1e-4
 )
 
-xgb_early.fit(
-    X_train_sub, y_train_sub,
-    eval_set=[(X_val, y_val)],
-    verbose=False
-)
+gb_monitored.fit(X_train, y_train)
 
-print(f"Best iteration: {xgb_early.best_iteration}")
-print(f"Best score: {xgb_early.best_score:.4f}")
-print(f"Test Accuracy: {xgb_early.score(X_test, y_test):.4f}")
+print(f"Number of estimators used: {gb_monitored.n_estimators_}")
+print(f"Test Accuracy: {gb_monitored.score(X_test, y_test):.4f}")
 
 # ============================================================
 # 3. Hyperparameter tuning
@@ -490,12 +487,11 @@ depths = [3, 5, 7, 9]
 scores = []
 
 for depth in depths:
-    model = xgb.XGBClassifier(
+    model = GradientBoostingClassifier(
         max_depth=depth,
         n_estimators=100,
         learning_rate=0.1,
-        random_state=42,
-        eval_metric='logloss'
+        random_state=42
     )
     cv_scores = cross_val_score(model, X_train, y_train, cv=5)
     scores.append(cv_scores.mean())
@@ -505,19 +501,18 @@ best_depth = depths[np.argmax(scores)]
 print(f"\nBest max_depth: {best_depth}")
 
 # Train with best depth
-xgb_tuned = xgb.XGBClassifier(
+gb_tuned = GradientBoostingClassifier(
     max_depth=best_depth,
     n_estimators=200,
     learning_rate=0.05,
     subsample=0.8,
-    colsample_bytree=0.8,
-    random_state=42,
-    eval_metric='logloss'
+    max_features='sqrt',
+    random_state=42
 )
 
-xgb_tuned.fit(X_train, y_train)
+gb_tuned.fit(X_train, y_train)
 
-print(f"\nTuned Model Test Accuracy: {xgb_tuned.score(X_test, y_test):.4f}")
+print(f"\nTuned Model Test Accuracy: {gb_tuned.score(X_test, y_test):.4f}")
 
 # ============================================================
 # 4. Feature Importance
@@ -526,21 +521,25 @@ print("\n" + "="*60)
 print("STEP 4: Feature Importance")
 print("="*60)
 
-importance_df = pd.DataFrame({
-    'Feature': feature_names,
-    'Importance': xgb_tuned.feature_importances_
-}).sort_values('Importance', ascending=False)
+# Sort features by importance
+importance_indices = np.argsort(gb_tuned.feature_importances_)[::-1]
+sorted_features = [feature_names[i] for i in importance_indices]
+sorted_importances = gb_tuned.feature_importances_[importance_indices]
 
 print("\nTop 10 Most Important Features:")
-print(importance_df.head(10).to_string(index=False))
+print(f"{'Feature':<30} {'Importance':<10}")
+print("-" * 40)
+for i in range(10):
+    print(f"{sorted_features[i]:<30} {sorted_importances[i]:<10.6f}")
 
 # Visualize
 plt.figure(figsize=(10, 8))
-top_15 = importance_df.head(15)
-plt.barh(range(len(top_15)), top_15['Importance'], color='steelblue')
-plt.yticks(range(len(top_15)), top_15['Feature'])
+top_15_features = sorted_features[:15]
+top_15_importances = sorted_importances[:15]
+plt.barh(range(len(top_15_features)), top_15_importances, color='steelblue')
+plt.yticks(range(len(top_15_features)), top_15_features)
 plt.xlabel('Importance', fontsize=12)
-plt.title('Top 15 Feature Importances (Gain)', fontsize=14, fontweight='bold')
+plt.title('Top 15 Feature Importances', fontsize=14, fontweight='bold')
 plt.gca().invert_yaxis()
 plt.tight_layout()
 plt.show()
@@ -553,22 +552,18 @@ print("STEP 5: Learning Curves")
 print("="*60)
 
 # Track performance as trees are added
-results = xgb_tuned.evals_result() if hasattr(xgb_tuned, 'evals_result') else None
-
-# Manual tracking
 n_trees = range(10, 201, 10)
 train_scores = []
 test_scores = []
 
 for n in n_trees:
-    model = xgb.XGBClassifier(
+    model = GradientBoostingClassifier(
         max_depth=best_depth,
         n_estimators=n,
         learning_rate=0.05,
         subsample=0.8,
-        colsample_bytree=0.8,
-        random_state=42,
-        eval_metric='logloss'
+        max_features='sqrt',
+        random_state=42
     )
     model.fit(X_train, y_train)
     train_scores.append(model.score(X_train, y_train))
@@ -579,7 +574,7 @@ plt.plot(n_trees, train_scores, label='Train Accuracy', linewidth=2)
 plt.plot(n_trees, test_scores, label='Test Accuracy', linewidth=2)
 plt.xlabel('Number of Trees', fontsize=12)
 plt.ylabel('Accuracy', fontsize=12)
-plt.title('XGBoost Learning Curves', fontsize=14, fontweight='bold')
+plt.title('Gradient Boosting Learning Curves', fontsize=14, fontweight='bold')
 plt.legend(fontsize=11)
 plt.grid(True, alpha=0.3)
 plt.tight_layout()
@@ -592,8 +587,8 @@ print("\n" + "="*60)
 print("STEP 6: Final Evaluation")
 print("="*60)
 
-y_pred = xgb_tuned.predict(X_test)
-y_pred_proba = xgb_tuned.predict_proba(X_test)[:, 1]
+y_pred = gb_tuned.predict(X_test)
+y_pred_proba = gb_tuned.predict_proba(X_test)[:, 1]
 
 print("\nClassification Report:")
 print(classification_report(y_test, y_pred,
@@ -607,11 +602,11 @@ print(f"ROC AUC Score: {roc_auc_score(y_test, y_pred_proba):.4f}")
 print("\n" + "="*60)
 print("SUMMARY")
 print("="*60)
-print(f"✓ Final Test Accuracy: {xgb_tuned.score(X_test, y_test):.4f}")
+print(f"✓ Final Test Accuracy: {gb_tuned.score(X_test, y_test):.4f}")
 print(f"✓ ROC AUC: {roc_auc_score(y_test, y_pred_proba):.4f}")
 print(f"✓ Best max_depth: {best_depth}")
-print(f"✓ Most important feature: {importance_df.iloc[0]['Feature']}")
-print("✓ XGBoost achieves excellent performance with tuning!")
+print(f"✓ Most important feature: {sorted_features[0]}")
+print("✓ Gradient Boosting achieves excellent performance with tuning!")
 ```
 </div>
 
@@ -664,23 +659,23 @@ where Coverage = number of samples affected by the split
 <div class="python-interactive" markdown="1">
 ```python
 import numpy as np
-import pandas as pd
-import xgboost as xgb
 from sklearn.datasets import load_wine
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.inspection import permutation_importance
 import matplotlib.pyplot as plt
 
 # Load dataset
 data = load_wine()
 X, y = data.data, data.target
-feature_names = data.feature_names
+feature_names = list(data.feature_names)
 
 print("Wine Classification Dataset")
 print(f"Samples: {X.shape[0]}")
 print(f"Features: {X.shape[1]}")
 print(f"Classes: {len(np.unique(y))}")
 
-# Train XGBoost
-model = xgb.XGBClassifier(
+# Train Gradient Boosting
+model = GradientBoostingClassifier(
     n_estimators=100,
     max_depth=5,
     learning_rate=0.1,
@@ -690,83 +685,66 @@ model.fit(X, y)
 
 print(f"\nAccuracy: {model.score(X, y):.3f}")
 
-# Get different importance types
-importance_gain = model.get_booster().get_score(importance_type='gain')
-importance_weight = model.get_booster().get_score(importance_type='weight')
-importance_cover = model.get_booster().get_score(importance_type='cover')
+# Get different importance measures
+# 1. Feature importance (impurity-based, similar to XGBoost's "gain")
+impurity_importance = model.feature_importances_
 
-# Convert to DataFrame
-def importance_to_df(importance_dict, feature_names):
-    # XGBoost uses f0, f1, etc. as feature names internally
-    features = [f'f{i}' for i in range(len(feature_names))]
-    values = [importance_dict.get(f, 0) for f in features]
-    return pd.DataFrame({'Feature': feature_names, 'Importance': values})
+# 2. Permutation importance (similar to XGBoost's feature impact)
+perm_result = permutation_importance(model, X, y, n_repeats=10, random_state=42)
+perm_importance = perm_result.importances_mean
 
-df_gain = importance_to_df(importance_gain, feature_names)
-df_weight = importance_to_df(importance_weight, feature_names)
-df_cover = importance_to_df(importance_cover, feature_names)
+# Sort and normalize
+def normalize_and_sort(importance, feature_names):
+    norm_importance = importance / importance.sum()
+    indices = np.argsort(norm_importance)[::-1]
+    return [feature_names[i] for i in indices], norm_importance[indices]
 
-# Normalize for comparison
-df_gain['Importance'] = df_gain['Importance'] / df_gain['Importance'].sum()
-df_weight['Importance'] = df_weight['Importance'] / df_weight['Importance'].sum()
-df_cover['Importance'] = df_cover['Importance'] / df_cover['Importance'].sum()
-
-# Sort and display
-df_gain = df_gain.sort_values('Importance', ascending=False)
-df_weight = df_weight.sort_values('Importance', ascending=False)
-df_cover = df_cover.sort_values('Importance', ascending=False)
+imp_features, imp_values = normalize_and_sort(impurity_importance, feature_names)
+perm_features, perm_values = normalize_and_sort(perm_importance, feature_names)
 
 print("\n" + "="*60)
 print("Feature Importance: Different Metrics")
 print("="*60)
 
-print("\nTop 5 by Gain (Predictive Power):")
-print(df_gain.head().to_string(index=False))
+print("\nTop 5 by Impurity-based Importance (Predictive Power):")
+print(f"{'Feature':<25} {'Importance':<10}")
+print("-" * 35)
+for i in range(5):
+    print(f"{imp_features[i]:<25} {imp_values[i]:<10.6f}")
 
-print("\nTop 5 by Weight (Usage Frequency):")
-print(df_weight.head().to_string(index=False))
-
-print("\nTop 5 by Cover (Sample Impact):")
-print(df_cover.head().to_string(index=False))
+print("\nTop 5 by Permutation Importance (Feature Impact):")
+print(f"{'Feature':<25} {'Importance':<10}")
+print("-" * 35)
+for i in range(5):
+    print(f"{perm_features[i]:<25} {perm_values[i]:<10.6f}")
 
 # Visualize
-fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+fig, axes = plt.subplots(1, 2, figsize=(16, 6))
 
-# Gain
-top_gain = df_gain.head(10)
-axes[0].barh(range(len(top_gain)), top_gain['Importance'], color='steelblue')
-axes[0].set_yticks(range(len(top_gain)))
-axes[0].set_yticklabels(top_gain['Feature'])
+# Impurity-based
+top_imp = 10
+axes[0].barh(range(top_imp), imp_values[:top_imp], color='steelblue')
+axes[0].set_yticks(range(top_imp))
+axes[0].set_yticklabels(imp_features[:top_imp])
 axes[0].set_xlabel('Normalized Importance')
-axes[0].set_title('Gain\n(Predictive Power)')
+axes[0].set_title('Impurity-based\n(Similar to XGBoost Gain)')
 axes[0].invert_yaxis()
 
-# Weight
-top_weight = df_weight.head(10)
-axes[1].barh(range(len(top_weight)), top_weight['Importance'], color='coral')
-axes[1].set_yticks(range(len(top_weight)))
-axes[1].set_yticklabels(top_weight['Feature'])
+# Permutation-based
+axes[1].barh(range(top_imp), perm_values[:top_imp], color='coral')
+axes[1].set_yticks(range(top_imp))
+axes[1].set_yticklabels(perm_features[:top_imp])
 axes[1].set_xlabel('Normalized Importance')
-axes[1].set_title('Weight\n(Usage Frequency)')
+axes[1].set_title('Permutation-based\n(Feature Impact on Accuracy)')
 axes[1].invert_yaxis()
-
-# Cover
-top_cover = df_cover.head(10)
-axes[2].barh(range(len(top_cover)), top_cover['Importance'], color='lightgreen')
-axes[2].set_yticks(range(len(top_cover)))
-axes[2].set_yticklabels(top_cover['Feature'])
-axes[2].set_xlabel('Normalized Importance')
-axes[2].set_title('Cover\n(Sample Impact)')
-axes[2].invert_yaxis()
 
 plt.tight_layout()
 plt.show()
 
 print("\n" + "="*60)
 print("Observations:")
-print("• Gain: Best for understanding predictive contribution")
-print("• Weight: Shows most frequently used features")
-print("• Cover: Reveals features affecting most samples")
+print("• Impurity-based: Fast to compute, shows predictive contribution")
+print("• Permutation-based: More reliable, measures actual impact on predictions")
 print("• Rankings can differ significantly!")
 ```
 </div>
