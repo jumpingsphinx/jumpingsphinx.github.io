@@ -105,7 +105,7 @@ The **determinant** is a scalar value that encodes important information about a
 
 ### Visual Understanding of the Determinant
 
-Before diving into the calculations, watch this intuitive explanation of what the determinant really represents geometrically:
+Before getting into the calculations, watch this intuitive explanation of what the determinant really represents geometrically:
 
 <div style="text-align: center; margin: 20px 0;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ip3X9LOh2dk" title="The determinant" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -354,8 +354,11 @@ print("\nAre they equal?", np.allclose(PA, LU_product))
 
 # Use LU to solve Ax = b
 b = np.array([4, 10, 24])
-from scipy.linalg import lu_solve
-x = lu_solve((L @ np.linalg.inv(P), U), b)
+from scipy.linalg import lu_factor, lu_solve
+
+# lu_factor returns (lu, piv) which can be used with lu_solve
+lu_factored, piv = lu_factor(A)
+x = lu_solve((lu_factored, piv), b)
 print(f"\nSolving Ax = b for b = {b}")
 print(f"Solution x: {x}")
 print(f"Verification A @ x = {A @ x}")

@@ -650,7 +650,7 @@ error = np.linalg.norm(A - A_approx, 'fro') / np.linalg.norm(A, 'fro')
 print(f"\nRelative reconstruction error: {error*100:.2f}%")
 
 # Variance explained
-variance_explained = S_k.sum()**2 / (S**2).sum()
+variance_explained = (S_k**2).sum() / (S**2).sum()
 print(f"Variance explained by top {k} components: {variance_explained*100:.1f}%")
 ```
 </div>
@@ -713,11 +713,16 @@ Keep only the top singular values to compress images:
 ```python
 import numpy as np
 
-# Create a simple "image" (gradient pattern)
+# Create a quasi-random "image" with structured noise
+np.random.seed(42)
 x = np.linspace(0, 1, 50)
 y = np.linspace(0, 1, 50)
 X, Y = np.meshgrid(x, y)
-image = np.sin(5 * X) * np.cos(5 * Y)
+
+# Combine smooth gradient with random noise for realistic image
+smooth_part = np.sin(3 * X) * np.cos(3 * Y)
+noise_part = 0.3 * np.random.randn(50, 50)
+image = smooth_part + noise_part
 
 print(f"Image shape: {image.shape}")
 
@@ -959,7 +964,13 @@ print("\nPositive covariance → features are correlated")
 
 # PCA finds directions that diagonalize this!
 eigenvalues, eigenvectors = np.linalg.eig(cov)
-print(f"\nEigenvalues: {eigenvalues}")
+
+# Sort by eigenvalue (descending) to get PCs in order of importance
+idx = eigenvalues.argsort()[::-1]
+eigenvalues = eigenvalues[idx]
+eigenvectors = eigenvectors[:, idx]
+
+print(f"\nEigenvalues (sorted): {eigenvalues}")
 print(f"First PC captures most variance: {eigenvalues[0]:.3f}")
 print(f"Second PC captures remaining variance: {eigenvalues[1]:.3f}")
 ```
