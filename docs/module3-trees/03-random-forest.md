@@ -961,22 +961,23 @@ print("\n" + "="*60)
 print("STEP 2: Hyperparameter Tuning")
 print("="*60)
 
+# Simplified parameter grid for faster execution in browser
+# Test fewer combinations but still show tuning concept
 param_grid = {
-    'n_estimators': [50, 100, 200],
-    'max_features': ['sqrt', 'log2', 5, 10],
-    'min_samples_split': [2, 5, 10],
-    'min_samples_leaf': [1, 2, 4]
+    'n_estimators': [50, 100],
+    'max_features': ['sqrt', 'log2'],
+    'min_samples_split': [2, 5]
 }
 
 grid_search = GridSearchCV(
     RandomForestClassifier(random_state=42, oob_score=True),
     param_grid,
-    cv=5,
+    cv=3,  # Reduced from 5 for speed
     scoring='accuracy',
     n_jobs=-1
 )
 
-print("Running grid search (this may take a minute)...")
+print("Running grid search (optimized for browser)...")
 grid_search.fit(X_train, y_train)
 
 print(f"\nBest parameters: {grid_search.best_params_}")
@@ -1077,7 +1078,8 @@ print("\n" + "="*60)
 print("STEP 5: Analyzing Number of Trees")
 print("="*60)
 
-n_trees_range = range(10, 201, 10)
+# Reduced range for faster execution in browser
+n_trees_range = range(10, 101, 15)  # Fewer steps: 10, 25, 40, 55, 70, 85, 100
 train_scores = []
 test_scores = []
 oob_scores = []
@@ -1087,7 +1089,6 @@ for n_trees in n_trees_range:
         n_estimators=n_trees,
         max_features=rf_tuned.max_features,
         min_samples_split=rf_tuned.min_samples_split,
-        min_samples_leaf=rf_tuned.min_samples_leaf,
         oob_score=True,
         random_state=42
     )
@@ -1121,7 +1122,7 @@ print("SUMMARY")
 print("="*60)
 print(f"✓ Best Model Accuracy: {rf_tuned.score(X_test, y_test):.4f}")
 print(f"✓ ROC AUC: {roc_auc:.4f}")
-print(f"✓ Most Important Feature: {importance_df.iloc[0]['Feature']}")
+print(f"✓ Most Important Feature: {sorted_features[0]}")
 print(f"✓ OOB score tracked test score within: {abs(rf_tuned.oob_score_ - rf_tuned.score(X_test, y_test)):.4f}")
 print("✓ Random Forest provides accurate, interpretable predictions!")
 ```

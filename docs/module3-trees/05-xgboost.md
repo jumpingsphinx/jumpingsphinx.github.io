@@ -551,8 +551,8 @@ print("\n" + "="*60)
 print("STEP 5: Learning Curves")
 print("="*60)
 
-# Track performance as trees are added
-n_trees = range(10, 201, 10)
+# Track performance as trees are added (reduced for browser performance)
+n_trees = range(10, 101, 15)  # Fewer steps for faster execution
 train_scores = []
 test_scores = []
 
