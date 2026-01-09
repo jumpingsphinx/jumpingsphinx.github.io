@@ -782,50 +782,57 @@ GradientBoostingClassifier(
 
 ## Summary
 
-**Key Takeaways:**
+In this lesson, you learned:
 
-1. **Boosting builds trees sequentially**, each correcting errors of previous ones
-2. **AdaBoost** reweights examples, focusing on misclassified cases
-3. **Gradient Boosting** fits residuals using gradient descent in function space
-4. **Weak learners** (stumps or shallow trees) combine to form strong ensemble
-5. **Learning rate** controls regularization through shrinkage
-6. **Hyperparameter tuning** is crucial for best performance
+✅ **Boosting Fundamentals**: Sequential ensemble building, each tree correcting previous errors
+✅ **AdaBoost**: Adaptive boosting through example reweighting
+✅ **Gradient Boosting**: Fitting residuals using gradient descent in function space
+✅ **Weak Learners**: How stumps and shallow trees combine into strong models
+✅ **Hyperparameters**: Learning rate, number of estimators, tree depth
+✅ **Practical Skills**: When to use boosting vs bagging
 
-**Boosting vs Bagging:**
-- Boosting: Reduces bias, sequential, higher accuracy potential
-- Bagging: Reduces variance, parallel, more robust to noise
+### Key Takeaways
 
-**Next Steps:**
+1. Boosting builds trees sequentially, each correcting errors of previous ones
+2. AdaBoost reweights examples to focus on hard cases
+3. Gradient Boosting fits residuals using gradient descent framework
+4. Learning rate controls regularization through shrinkage
+5. Boosting reduces bias while bagging reduces variance
+6. Hyperparameter tuning is crucial for best performance
 
-In the next lesson, we'll explore **XGBoost**, the industry-standard implementation of gradient boosting that adds:
-- Advanced regularization techniques
-- Optimized algorithms for speed
-- Handling of missing values
-- Built-in cross-validation
-- Feature importance calculation
+### Next Steps
 
-XGBoost and its variants (LightGBM, CatBoost) dominate Kaggle competitions and production ML systems.
+Now that you understand boosting fundamentals, you're ready to learn about **XGBoost**, the industry-standard implementation that adds advanced regularization, optimized algorithms, and features that dominate Kaggle competitions and production ML systems.
 
-## Practice Exercises
-
-Ready to apply boosting? Head to the exercises to:
-
-1. Implement AdaBoost from scratch
-2. Compare AdaBoost and Gradient Boosting
-3. Tune hyperparameters for optimal performance
-4. Apply to real-world classification and regression problems
-5. Understand when boosting outperforms Random Forest
-
-[Start Exercises](exercises.md){ .md-button .md-button--primary }
-
-## Additional Resources
-
-- **Original AdaBoost Paper**: [Freund & Schapire (1997). "A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting"](https://www.sciencedirect.com/science/article/pii/S002200009791504X)
-- **Gradient Boosting Paper**: [Friedman (2001). "Greedy Function Approximation: A Gradient Boosting Machine"](https://statweb.stanford.edu/~jhf/ftp/trebst.pdf)
-- **Scikit-learn Documentation**: [AdaBoost](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html), [GradientBoosting](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html)
-- **Book**: "The Elements of Statistical Learning" - Chapter 10
+[Continue to Lesson 5: XGBoost](05-xgboost.md){ .md-button .md-button--primary }
 
 ---
 
-[Next: Lesson 5 - XGBoost](05-xgboost.md){ .md-button .md-button--primary }
-[Back: Lesson 3 - Random Forest](03-random-forest.md){ .md-button }
+## Additional Resources
+
+### Further Reading
+
+- **Original Papers**:
+  - Freund & Schapire (1997): [A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting](https://www.sciencedirect.com/science/article/pii/S002200009791504X)
+  - Friedman (2001): [Greedy Function Approximation: A Gradient Boosting Machine](https://statweb.stanford.edu/~jhf/ftp/trebst.pdf)
+
+- **Books**:
+  - *The Elements of Statistical Learning* - Chapter 10
+  - *Hands-On Machine Learning* by Géron - Chapter 7
+
+### Implementation Notes
+
+**sklearn's Boosting:**
+- `AdaBoostClassifier` and `AdaBoostRegressor`
+- `GradientBoostingClassifier` and `GradientBoostingRegressor`
+- Both support various loss functions and weak learners
+
+### Practice Exercises
+
+Ready to apply what you learned? Work through the hands-on exercises:
+
+[Go to Exercises](exercises.md){ .md-button }
+
+---
+
+**Questions or feedback?** Open an issue on [GitHub](https://github.com/jumpingsphinx/jumpingsphinx.github.io/issues) or contribute improvements!

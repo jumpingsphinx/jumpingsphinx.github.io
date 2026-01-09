@@ -1242,54 +1242,45 @@ RandomForestClassifier(
 
 ## Summary
 
-Random Forest combines multiple powerful ideas into one cohesive algorithm:
+In this lesson, you learned:
 
-1. **Bootstrap Aggregating (Bagging)**: Train trees on different data subsets to reduce variance
-2. **Feature Randomness**: Consider random feature subsets to decorrelate trees
-3. **Out-of-Bag Estimation**: Get free validation from samples not in bootstrap
-4. **Feature Importance**: Understand which features drive predictions
+✅ **Bagging**: Bootstrap aggregating reduces variance by averaging predictions
+✅ **Random Forest**: Combines bagging with feature randomness for decorrelated trees
+✅ **OOB Error**: Free validation estimate without holdout set
+✅ **Feature Importance**: Understanding which features drive predictions
+✅ **Hyperparameters**: How to tune for optimal performance
+✅ **Practical Skills**: When to use Random Forest and common pitfalls
 
-**Key Takeaways:**
+### Key Takeaways
 
-- Random Forest reduces variance by averaging many high-variance trees
-- Feature randomness decorrelates trees, enabling continued improvement with more trees
-- OOB error provides unbiased performance estimate without validation set
-- Feature importance enables model interpretation and feature selection
-- Excellent default parameters make it easy to get good results quickly
-- One of the most widely-used algorithms in practice
+1. Random Forest reduces variance by averaging many high-variance trees
+2. Feature randomness decorrelates trees, enabling continued improvement with more trees
+3. OOB error provides unbiased performance estimate without validation set
+4. Excellent default parameters make it easy to get good results quickly
+5. One of the most widely-used algorithms in practice for tabular data
 
-**When to Use Random Forest:**
+### Next Steps
 
-✅ Tabular data with mixed feature types
-✅ Need robust baseline or production model
-✅ Want feature importance for interpretation
-✅ Have medium-sized dataset (1K-1M samples)
-✅ Relationships are non-linear
+Now that you understand Random Forest, you're ready to learn about **boosting**, an alternative ensemble method that builds trees sequentially rather than independently. While Random Forest reduces variance through averaging, boosting reduces bias by focusing on hard-to-predict examples.
 
-**Next Steps:**
-
-In the next lesson, we'll explore **boosting**, an alternative ensemble method that builds trees sequentially rather than independently. While Random Forest reduces variance through averaging, boosting reduces bias by focusing on hard-to-predict examples.
-
-## Practice Exercises
-
-Ready to apply what you've learned? Head over to the exercises to:
-
-1. Implement Random Forest for classification and regression
-2. Compare with single decision trees and bagging
-3. Analyze feature importance on real datasets
-4. Tune hyperparameters using OOB error
-5. Apply Random Forest to a Kaggle-style competition problem
-
-[Start Exercises](exercises.md){ .md-button .md-button--primary }
-
-## Additional Resources
-
-- **Original Paper**: [Breiman, L. (2001). "Random Forests." Machine Learning 45(1), 5-32.](https://link.springer.com/article/10.1023/A:1010933404324)
-- **Scikit-learn Documentation**: [Random Forest Classifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)
-- **Tutorial**: [Random Forests in Python](https://www.datacamp.com/tutorial/random-forests-classifier-python)
-- **Book**: "The Elements of Statistical Learning" - Chapter 15
+[Continue to Lesson 4: Boosting](04-boosting.md){ .md-button .md-button--primary }
 
 ---
 
-[Next: Lesson 4 - Boosting](04-boosting.md){ .md-button .md-button--primary }
-[Back: Lesson 2 - Tree Algorithms](02-tree-algorithms.md){ .md-button }
+## Additional Resources
+
+### Further Reading
+
+- **Original Paper**: [Breiman, L. (2001). "Random Forests." Machine Learning 45(1), 5-32.](https://link.springer.com/article/10.1023/A:1010933404324)
+- **Scikit-learn Documentation**: [Random Forest Classifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)
+- **Book**: "The Elements of Statistical Learning" - Chapter 15
+
+### Practice Exercises
+
+Ready to apply what you learned? Work through the hands-on exercises:
+
+[Go to Exercises](exercises.md){ .md-button }
+
+---
+
+**Questions or feedback?** Open an issue on [GitHub](https://github.com/jumpingsphinx/jumpingsphinx.github.io/issues) or contribute improvements!
