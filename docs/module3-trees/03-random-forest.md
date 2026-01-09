@@ -1291,8 +1291,5 @@ Ready to apply what you've learned? Head over to the exercises to:
 
 ---
 
-**Navigation:**
-
-- [← Previous: Tree Algorithms](02-tree-algorithms.md)
-- [Next: Boosting →](04-boosting.md)
-- [Module Overview](index.md)
+[Next: Lesson 4 - Boosting](04-boosting.md){ .md-button .md-button--primary }
+[Back: Lesson 2 - Tree Algorithms](02-tree-algorithms.md){ .md-button }

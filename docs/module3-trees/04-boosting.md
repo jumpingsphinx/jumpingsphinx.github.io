@@ -827,8 +827,5 @@ Ready to apply boosting? Head to the exercises to:
 
 ---
 
-**Navigation:**
-
-- [← Previous: Random Forest](03-random-forest.md)
-- [Next: XGBoost →](05-xgboost.md)
-- [Module Overview](index.md)
+[Next: Lesson 5 - XGBoost](05-xgboost.md){ .md-button .md-button--primary }
+[Back: Lesson 3 - Random Forest](03-random-forest.md){ .md-button }

@@ -787,10 +787,11 @@ model = xgb.XGBClassifier(
 <div class="python-interactive" markdown="1">
 ```python
 import numpy as np
-import xgboost as xgb
+from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score
+from sklearn.utils.class_weight import compute_sample_weight
 import matplotlib.pyplot as plt
 
 # Create imbalanced dataset
@@ -821,38 +822,39 @@ print("\n" + "="*60)
 print("Model 1: No Balancing")
 print("="*60)
 
-xgb_no_balance = xgb.XGBClassifier(
+gb_no_balance = GradientBoostingClassifier(
     n_estimators=100,
     learning_rate=0.1,
     max_depth=5,
     random_state=42
 )
 
-xgb_no_balance.fit(X_train, y_train)
-y_pred = xgb_no_balance.predict(X_test)
+gb_no_balance.fit(X_train, y_train)
+y_pred = gb_no_balance.predict(X_test)
 
 print(classification_report(y_test, y_pred, target_names=['Class 0', 'Class 1']))
 
 # ============================================================
-# 2. With scale_pos_weight
+# 2. With sample weights (similar to XGBoost's scale_pos_weight)
 # ============================================================
 print("\n" + "="*60)
-print("Model 2: With scale_pos_weight")
+print("Model 2: With Balanced Sample Weights")
 print("="*60)
 
-scale_pos_weight = np.sum(y_train == 0) / np.sum(y_train == 1)
-print(f"scale_pos_weight: {scale_pos_weight:.2f}")
+# Compute sample weights to balance classes
+sample_weights = compute_sample_weight(class_weight='balanced', y=y_train)
+print(f"Class 0 weight: {sample_weights[y_train == 0][0]:.2f}")
+print(f"Class 1 weight: {sample_weights[y_train == 1][0]:.2f}")
 
-xgb_balanced = xgb.XGBClassifier(
+gb_balanced = GradientBoostingClassifier(
     n_estimators=100,
     learning_rate=0.1,
     max_depth=5,
-    scale_pos_weight=scale_pos_weight,
     random_state=42
 )
 
-xgb_balanced.fit(X_train, y_train)
-y_pred_balanced = xgb_balanced.predict(X_test)
+gb_balanced.fit(X_train, y_train, sample_weight=sample_weights)
+y_pred_balanced = gb_balanced.predict(X_test)
 
 print(classification_report(y_test, y_pred_balanced, target_names=['Class 0', 'Class 1']))
 
@@ -878,8 +880,8 @@ print(f"Actual 0:  {cm_balanced[0, 0]:4d}  {cm_balanced[0, 1]:4d}")
 print(f"Actual 1:  {cm_balanced[1, 0]:4d}  {cm_balanced[1, 1]:4d}")
 
 # ROC AUC
-y_pred_proba = xgb_no_balance.predict_proba(X_test)[:, 1]
-y_pred_proba_balanced = xgb_balanced.predict_proba(X_test)[:, 1]
+y_pred_proba = gb_no_balance.predict_proba(X_test)[:, 1]
+y_pred_proba_balanced = gb_balanced.predict_proba(X_test)[:, 1]
 
 roc_auc = roc_auc_score(y_test, y_pred_proba)
 roc_auc_balanced = roc_auc_score(y_test, y_pred_proba_balanced)
@@ -896,7 +898,7 @@ print(f"Minority Class Recall (With Balancing): {recall_balanced:.4f}")
 
 print("\n" + "="*60)
 print("Key Takeaway:")
-print("scale_pos_weight improves recall for minority class")
+print("Sample weights improve recall for minority class")
 print("while maintaining good overall performance!")
 print("="*60)
 ```
@@ -904,7 +906,7 @@ print("="*60)
 
 **Expected Output:**
 - Without balancing: High accuracy but poor minority class recall
-- With balancing: Better minority class recall, similar ROC AUC
+- With sample weights: Better minority class recall, similar ROC AUC
 - Confusion matrices show the difference clearly
 - Balancing trades off precision for recall on minority class
 
