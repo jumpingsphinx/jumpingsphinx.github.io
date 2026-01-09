@@ -284,7 +284,7 @@ $$
 \begin{align}
 \mathbf{d}\mathbf{z}^{[2]} &= \mathbf{a}^{[2]} - y \\
 \frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[2]}} &= \mathbf{d}\mathbf{z}^{[2]} \cdot (\mathbf{a}^{[1]})^T \\
-\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[2]}} &= \mathbf{d}\mathbf{z}^{[2]}}
+\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[2]}} &= \mathbf{d}\mathbf{z}^{[2]}
 \end{align}
 $$
 
@@ -293,7 +293,7 @@ $$
 \begin{align}
 \mathbf{d}\mathbf{z}^{[1]} &= (\mathbf{W}^{[2]})^T \mathbf{d}\mathbf{z}^{[2]} \odot \text{ReLU}'(\mathbf{z}^{[1]}) \\
 \frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[1]}} &= \mathbf{d}\mathbf{z}^{[1]} \cdot \mathbf{x}^T \\
-\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[1]}} &= \mathbf{d}\mathbf{z}^{[1]}}
+\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[1]}} &= \mathbf{d}\mathbf{z}^{[1]}
 \end{align}
 $$
 
@@ -747,7 +747,30 @@ print("=" * 60)
 print("Comparing backpropagation gradients with numerical gradients...")
 print("(This may take a few seconds)\n")
 
-difference = gradient_check(X_xor, y_xor, parameters, grads)
+# Initialize small network for gradient checking
+np.random.seed(42)
+n_input = 2
+n_hidden = 3
+n_output = 1
+
+# Create parameters dictionary
+test_params = {
+    'W1': np.random.randn(n_hidden, n_input) * 0.01,
+    'b1': np.zeros((n_hidden, 1)),
+    'W2': np.random.randn(n_output, n_hidden) * 0.01,
+    'b2': np.zeros((n_output, 1))
+}
+
+# Forward pass to get cache
+A2_test, cache_test = forward_propagation(X_xor, test_params['W1'], test_params['b1'],
+                                          test_params['W2'], test_params['b2'])
+
+# Backward pass to get gradients
+test_grads = backward_propagation(y_xor, cache_test, test_params['W1'], test_params['b1'],
+                                  test_params['W2'], test_params['b2'])
+
+# Check gradients
+difference = gradient_check(X_xor, y_xor, test_params, test_grads)
 
 print(f"Relative difference: {difference:.2e}")
 print()
@@ -850,7 +873,12 @@ Z_test = np.array([-2, -1, 0, 1, 2])
 
 print("Activation Function Derivatives:")
 print("=" * 60)
-print(f"{'Z':<10} {'σ\'(Z)':<12} {'tanh\'(Z)':<12} {'ReLU\'(Z)':<12}")
+# Define headers without backslashes in f-string
+col1 = "Z"
+col2 = "σ'(Z)"
+col3 = "tanh'(Z)"
+col4 = "ReLU'(Z)"
+print(f"{col1:<10} {col2:<12} {col3:<12} {col4:<12}")
 print("-" * 60)
 for z in Z_test:
     sig_deriv = sigmoid_derivative(z)
@@ -911,59 +939,84 @@ def track_gradients(X, Y, epochs=100):
     n_hidden = 4
     n_input = X.shape[0]
 
-    # Initialize
-    W1 = np.random.randn(n_hidden, n_input) * 0.01
+    # Initialize with larger weights to start farther from optimum
+    np.random.seed(42)
+    W1 = np.random.randn(n_hidden, n_input) * 0.5
     b1 = np.zeros((n_hidden, 1))
-    W2 = np.random.randn(1, n_hidden) * 0.01
+    W2 = np.random.randn(1, n_hidden) * 0.5
     b2 = np.zeros((1, 1))
 
     grad_W1_norms = []
     grad_W2_norms = []
+    losses = []
 
     for epoch in range(epochs):
         # Forward + backward
         A2, cache = forward_propagation(X, W1, b1, W2, b2)
         grads = backward_propagation(Y, cache, W1, b1, W2, b2)
 
-        # Track gradient magnitudes
-        grad_W1_norms.append(np.linalg.norm(grads['dW1']))
-        grad_W2_norms.append(np.linalg.norm(grads['dW2']))
+        # Track loss
+        loss = binary_cross_entropy(A2, Y)
+        losses.append(loss)
 
-        # Update
-        W1, b1, W2, b2 = update_parameters(W1, b1, W2, b2, grads, learning_rate=0.5)
+        # Track gradient magnitudes (use mean instead of norm to avoid spikes)
+        grad_W1_norms.append(np.mean(np.abs(grads['dW1'])))
+        grad_W2_norms.append(np.mean(np.abs(grads['dW2'])))
 
-    return grad_W1_norms, grad_W2_norms
+        # Update with smaller learning rate for smoother convergence
+        W1, b1, W2, b2 = update_parameters(W1, b1, W2, b2, grads, learning_rate=0.3)
+
+    return grad_W1_norms, grad_W2_norms, losses
 
 # Track gradients during training
-grad_W1_norms, grad_W2_norms = track_gradients(X_xor, y_xor, epochs=200)
+grad_W1_norms, grad_W2_norms, losses = track_gradients(X_xor, y_xor, epochs=200)
 
 # Plot
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-ax1.plot(grad_W1_norms, label='Layer 1 (Hidden)', linewidth=2)
-ax1.plot(grad_W2_norms, label='Layer 2 (Output)', linewidth=2)
-ax1.set_xlabel('Epoch', fontsize=12)
-ax1.set_ylabel('Gradient Magnitude', fontsize=12)
-ax1.set_title('Gradient Magnitudes During Training', fontsize=13, fontweight='bold')
-ax1.legend()
-ax1.grid(True, alpha=0.3)
+# Gradient magnitudes (linear scale)
+axes[0, 0].plot(grad_W1_norms, label='Layer 1 (Hidden)', linewidth=2, alpha=0.8)
+axes[0, 0].plot(grad_W2_norms, label='Layer 2 (Output)', linewidth=2, alpha=0.8)
+axes[0, 0].set_xlabel('Epoch', fontsize=12)
+axes[0, 0].set_ylabel('Mean Absolute Gradient', fontsize=12)
+axes[0, 0].set_title('Gradient Magnitudes During Training', fontsize=13, fontweight='bold')
+axes[0, 0].legend()
+axes[0, 0].grid(True, alpha=0.3)
 
-ax2.semilogy(grad_W1_norms, label='Layer 1 (Hidden)', linewidth=2)
-ax2.semilogy(grad_W2_norms, label='Layer 2 (Output)', linewidth=2)
-ax2.set_xlabel('Epoch', fontsize=12)
-ax2.set_ylabel('Gradient Magnitude (log scale)', fontsize=12)
-ax2.set_title('Gradient Magnitudes (Log Scale)', fontsize=13, fontweight='bold')
-ax2.legend()
-ax2.grid(True, alpha=0.3)
+# Gradient magnitudes (log scale)
+axes[0, 1].semilogy(grad_W1_norms, label='Layer 1 (Hidden)', linewidth=2, alpha=0.8)
+axes[0, 1].semilogy(grad_W2_norms, label='Layer 2 (Output)', linewidth=2, alpha=0.8)
+axes[0, 1].set_xlabel('Epoch', fontsize=12)
+axes[0, 1].set_ylabel('Mean Absolute Gradient (log)', fontsize=12)
+axes[0, 1].set_title('Gradients (Log Scale)', fontsize=13, fontweight='bold')
+axes[0, 1].legend()
+axes[0, 1].grid(True, alpha=0.3)
+
+# Loss curve
+axes[1, 0].plot(losses, linewidth=2, color='green')
+axes[1, 0].set_xlabel('Epoch', fontsize=12)
+axes[1, 0].set_ylabel('Loss', fontsize=12)
+axes[1, 0].set_title('Training Loss', fontsize=13, fontweight='bold')
+axes[1, 0].grid(True, alpha=0.3)
+
+# Gradient ratio
+axes[1, 1].plot(np.array(grad_W1_norms) / np.array(grad_W2_norms),
+                linewidth=2, color='purple')
+axes[1, 1].set_xlabel('Epoch', fontsize=12)
+axes[1, 1].set_ylabel('Gradient Ratio (L1/L2)', fontsize=12)
+axes[1, 1].set_title('Layer 1 / Layer 2 Gradient Ratio', fontsize=13, fontweight='bold')
+axes[1, 1].grid(True, alpha=0.3)
 
 plt.tight_layout()
 plt.show()
 
 print("Gradient Flow Observations:")
 print("=" * 60)
-print("• Gradients are larger in early training (network is far from optimum)")
-print("• Gradients decrease as network converges")
-print("• Layer 2 gradients often larger (closer to loss function)")
+print("• Gradients start large when network is far from optimum")
+print("• Gradients decrease as loss decreases and network converges")
+print("• Both layers show decreasing gradients over time")
+print("• Layer 2 gradients typically larger (directly connected to loss)")
+print("• Smooth gradient decay indicates healthy training")
 print("• If gradients vanish (→0) or explode (→∞), training fails!")
 ```
 </div>
