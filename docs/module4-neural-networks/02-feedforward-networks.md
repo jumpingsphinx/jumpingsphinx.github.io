@@ -481,17 +481,18 @@ import numpy as np
 nn_xor = NeuralNetwork(n_input=2, n_hidden=2)
 
 # Manually set weights to solve XOR
-# These weights were carefully chosen to implement:
-# h1 = AND(x1, x2), h2 = OR(x1, x2)
-# output = AND(NOT h1, h2) = XOR(x1, x2)
+# Strategy: h1 = x1, h2 = x2, output = XOR logic
+# h1 detects "left is 1" (x1 OR NOT x2)
+# h2 detects "right is 1" (x2 OR NOT x1)
+# output = AND(h1, h2) = XOR
 
-nn_xor.W1 = np.array([[ 20,  20],   # First hidden neuron (AND-like)
-                      [ 20,  20]])   # Second hidden neuron (OR-like)
-nn_xor.b1 = np.array([[-30],         # High threshold for AND
-                      [-10]])        # Low threshold for OR
+nn_xor.W1 = np.array([[ 20, -20],   # First hidden neuron: x1 OR NOT x2
+                      [-20,  20]])   # Second hidden neuron: NOT x1 OR x2
+nn_xor.b1 = np.array([[-10],         # Threshold for h1
+                      [-10]])        # Threshold for h2
 
-nn_xor.W2 = np.array([[-20, 20]])    # Negative first, positive second
-nn_xor.b2 = np.array([[-10]])
+nn_xor.W2 = np.array([[20, 20]])     # AND both hidden neurons
+nn_xor.b2 = np.array([[-30]])
 
 # Test the network
 predictions, cache = nn_xor.forward(X_xor)
@@ -516,7 +517,7 @@ print(f"\nAccuracy: {accuracy:.2%}")
 print("\nHidden Layer Activations:")
 print("-" * 60)
 print("(Shows how the network transforms the input)")
-print(f"{'x1':<5} {'x2':<5} {'h1 (AND-like)':<15} {'h2 (OR-like)'}")
+print(f"{'x1':<5} {'x2':<5} {'h1':<15} {'h2'}")
 print("-" * 60)
 for i in range(4):
     x1, x2 = X_xor[:, i]
@@ -532,12 +533,12 @@ for i in range(4):
 The network learns a clever transformation:
 
 1. **Hidden Layer**: Creates new features
-   - $h_1 \approx \text{AND}(x_1, x_2)$ - activates only when both inputs are 1
-   - $h_2 \approx \text{OR}(x_1, x_2)$ - activates when either input is 1
+   - $h_1 = \sigma(20x_1 - 20x_2 - 10)$ - activates when $x_1 > x_2$ (detects "left is 1, right is 0")
+   - $h_2 = \sigma(-20x_1 + 20x_2 - 10)$ - activates when $x_2 > x_1$ (detects "right is 1, left is 0")
 
 2. **Output Layer**: Combines hidden features
-   - $\hat{y} = \text{AND}(\neg h_1, h_2)$ - output is 1 when OR is true but AND is false
-   - This is exactly XOR!
+   - $\hat{y} = \sigma(20h_1 + 20h_2 - 30)$ - output is 1 when either $h_1$ OR $h_2$ is active (but not both)
+   - This is exactly XOR: outputs 1 when inputs differ!
 
 **Key Insight**: The hidden layer **transforms the representation** so that XOR becomes linearly separable in the new space!
 
@@ -569,21 +570,26 @@ ax1.set_xlim(-0.5, 1.5)
 ax1.set_ylim(-0.5, 1.5)
 
 # Hidden space (linearly separable!)
-ax2.scatter(H[0, y_xor[0]==0], H[1, y_xor[0]==0],
+# Plot Class 0 points (where y=0): indices 0 and 3 -> (0,0) and (1,1)
+class_0_indices = np.where(y_xor[0] == 0)[0]
+class_1_indices = np.where(y_xor[0] == 1)[0]
+
+ax2.scatter(H[0, class_0_indices], H[1, class_0_indices],
             c='blue', s=200, edgecolors='k', marker='o', label='Class 0')
-ax2.scatter(H[0, y_xor[0]==1], H[1, y_xor[0]==1],
+# Plot Class 1 points (where y=1): indices 1 and 2 -> (0,1) and (1,0)
+ax2.scatter(H[0, class_1_indices], H[1, class_1_indices],
             c='red', s=200, edgecolors='k', marker='s', label='Class 1')
 
 # Draw decision boundary in hidden space
-h_vals = np.linspace(-0.5, 1.5, 100)
-# Approximate decision boundary from output layer weights
+h_vals = np.linspace(-0.1, 1.1, 100)
+# Decision boundary from output layer weights
 # W2[0] * h1 + W2[1] * h2 + b2 = 0
 # h2 = -(W2[0] * h1 + b2) / W2[1]
 boundary_h2 = -(nn_xor.W2[0, 0] * h_vals + nn_xor.b2[0, 0]) / nn_xor.W2[0, 1]
 ax2.plot(h_vals, boundary_h2, 'k-', linewidth=2, label='Decision Boundary')
 
-ax2.set_xlabel('$h_1$ (AND-like)', fontsize=14)
-ax2.set_ylabel('$h_2$ (OR-like)', fontsize=14)
+ax2.set_xlabel('$h_1$', fontsize=14)
+ax2.set_ylabel('$h_2$', fontsize=14)
 ax2.set_title('Hidden Layer Space\n(Linearly Separable!)', fontsize=14, fontweight='bold')
 ax2.legend(fontsize=11)
 ax2.grid(True, alpha=0.3)
@@ -618,35 +624,44 @@ import matplotlib.pyplot as plt
 
 def plot_decision_boundary_nn(nn, X, y, title):
     """Plot decision boundary for a neural network."""
-    # Create mesh
+    # Create mesh grid
     x_min, x_max = -0.5, 1.5
     y_min, y_max = -0.5, 1.5
-    xx, yy = np.meshgrid(np.linspace(x_min, x_max, 200),
-                         np.linspace(y_min, y_max, 200))
+    h = 0.01  # Step size for fine resolution
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+                         np.arange(y_min, y_max, h))
 
-    # Flatten mesh and make predictions
+    # Create input matrix from mesh grid
+    # Shape: (2, num_points) to match network input format
     mesh_points = np.c_[xx.ravel(), yy.ravel()].T
+
+    # Make predictions
     Z, _ = nn.forward(mesh_points)
     Z = Z.reshape(xx.shape)
 
     # Plot
     plt.figure(figsize=(10, 7))
-    plt.contourf(xx, yy, Z, levels=20, cmap='RdYlBu', alpha=0.8)
-    plt.colorbar(label='Prediction')
+    # Use contourf to show probability regions
+    plt.contourf(xx, yy, Z, levels=np.linspace(0, 1, 21), cmap='RdYlBu', alpha=0.8)
+    plt.colorbar(label='P(Class 1)')
+
+    # Plot decision boundary (where prediction = 0.5)
+    plt.contour(xx, yy, Z, levels=[0.5], colors='black', linewidths=3,
+                linestyles='solid', label='Decision Boundary')
 
     # Plot data points
-    plt.scatter(X[0, y[0]==0], X[1, y[0]==0], c='blue', s=200,
-                edgecolors='k', label='Class 0', marker='o', linewidth=2)
-    plt.scatter(X[0, y[0]==1], X[1, y[0]==1], c='red', s=200,
-                edgecolors='k', label='Class 1', marker='s', linewidth=2)
+    class_0_idx = np.where(y[0] == 0)[0]
+    class_1_idx = np.where(y[0] == 1)[0]
 
-    # Plot decision boundary
-    plt.contour(xx, yy, Z, levels=[0.5], colors='black', linewidths=3)
+    plt.scatter(X[0, class_0_idx], X[1, class_0_idx], c='blue', s=250,
+                edgecolors='k', label='Class 0 (XOR=0)', marker='o', linewidth=2.5)
+    plt.scatter(X[0, class_1_idx], X[1, class_1_idx], c='red', s=250,
+                edgecolors='k', label='Class 1 (XOR=1)', marker='s', linewidth=2.5)
 
     plt.xlabel('$x_1$', fontsize=13)
     plt.ylabel('$x_2$', fontsize=13)
     plt.title(title, fontsize=14, fontweight='bold')
-    plt.legend(fontsize=12)
+    plt.legend(fontsize=12, loc='upper right')
     plt.grid(True, alpha=0.3)
     plt.xlim(x_min, x_max)
     plt.ylim(y_min, y_max)
