@@ -687,13 +687,14 @@ def numerical_gradient(X, Y, parameters, param_name, epsilon=1e-7):
 
         # Compute J(theta + epsilon)
         param[idx] = old_value + epsilon
-        W1, b1, W2, b2 = parameters['W1'], parameters['b1'], parameters['W2'], parameters['b2']
-        A2_plus, _ = forward_propagation(X, W1, b1, W2, b2)
+        A2_plus, _ = forward_propagation(X, parameters['W1'], parameters['b1'],
+                                        parameters['W2'], parameters['b2'])
         loss_plus = binary_cross_entropy(A2_plus, Y)
 
         # Compute J(theta - epsilon)
         param[idx] = old_value - epsilon
-        A2_minus, _ = forward_propagation(X, W1, b1, W2, b2)
+        A2_minus, _ = forward_propagation(X, parameters['W1'], parameters['b1'],
+                                         parameters['W2'], parameters['b2'])
         loss_minus = binary_cross_entropy(A2_minus, Y)
 
         # Numerical gradient
@@ -715,15 +716,12 @@ def gradient_check(X, Y, parameters, grads, epsilon=1e-7):
         Relative difference between gradients
     """
     # Convert gradients to vectors
-    params_vector = []
     grads_vector = []
 
     for param_name in ['W1', 'b1', 'W2', 'b2']:
-        params_vector.append(parameters[param_name].ravel())
         grad_name = 'd' + param_name
         grads_vector.append(grads[grad_name].ravel())
 
-    params_vector = np.concatenate(params_vector)
     grads_vector = np.concatenate(grads_vector)
 
     # Compute numerical gradient
@@ -737,7 +735,12 @@ def gradient_check(X, Y, parameters, grads, epsilon=1e-7):
     # Compute relative difference
     numerator = np.linalg.norm(grads_vector - num_grads_vector)
     denominator = np.linalg.norm(grads_vector) + np.linalg.norm(num_grads_vector)
-    difference = numerator / denominator
+
+    # Avoid division by zero
+    if denominator == 0:
+        difference = 0 if numerator == 0 else np.inf
+    else:
+        difference = numerator / denominator
 
     return difference
 
@@ -753,11 +756,11 @@ n_input = 2
 n_hidden = 3
 n_output = 1
 
-# Create parameters dictionary
+# Create parameters dictionary with slightly larger initialization
 test_params = {
-    'W1': np.random.randn(n_hidden, n_input) * 0.01,
+    'W1': np.random.randn(n_hidden, n_input) * 0.1,
     'b1': np.zeros((n_hidden, 1)),
-    'W2': np.random.randn(n_output, n_hidden) * 0.01,
+    'W2': np.random.randn(n_output, n_hidden) * 0.1,
     'b2': np.zeros((n_output, 1))
 }
 
@@ -1014,8 +1017,7 @@ print("Gradient Flow Observations:")
 print("=" * 60)
 print("• Gradients start large when network is far from optimum")
 print("• Gradients decrease as loss decreases and network converges")
-print("• Both layers show decreasing gradients over time")
-print("• Layer 2 gradients typically larger (directly connected to loss)")
+print("• Both layers show decreasing gradients over as epochs go to infinity")
 print("• Smooth gradient decay indicates healthy training")
 print("• If gradients vanish (→0) or explode (→∞), training fails!")
 ```
