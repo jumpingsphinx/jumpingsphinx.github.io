@@ -706,15 +706,33 @@ def numerical_gradient(X, Y, parameters, param_name, epsilon=1e-7):
 
     return grad_numerical
 
-def gradient_check(X, Y, parameters, grads, epsilon=1e-7):
+def gradient_check(X, Y, parameters, grads=None, epsilon=1e-7):
     """
     Check if backpropagation gradients are correct.
+
+    Parameters:
+    -----------
+    X, Y : ndarrays
+        Input data and labels
+    parameters : dict
+        Network parameters
+    grads : dict or None
+        If None, will compute gradients internally
+    epsilon : float
+        Perturbation size for numerical gradient
 
     Returns:
     --------
     difference : float
         Relative difference between gradients
     """
+    # Compute analytical gradients if not provided
+    if grads is None:
+        A2, cache = forward_propagation(X, parameters['W1'], parameters['b1'],
+                                        parameters['W2'], parameters['b2'])
+        grads = backward_propagation(Y, cache, parameters['W1'], parameters['b1'],
+                                     parameters['W2'], parameters['b2'])
+
     # Convert gradients to vectors
     grads_vector = []
 
@@ -758,22 +776,17 @@ n_output = 1
 
 # Create parameters dictionary with slightly larger initialization
 test_params = {
-    'W1': np.random.randn(n_hidden, n_input) * 0.1,
+    'W1': np.random.randn(n_hidden, n_input) * 0.5,
     'b1': np.zeros((n_hidden, 1)),
-    'W2': np.random.randn(n_output, n_hidden) * 0.1,
+    'W2': np.random.randn(n_output, n_hidden) * 0.5,
     'b2': np.zeros((n_output, 1))
 }
 
-# Forward pass to get cache
-A2_test, cache_test = forward_propagation(X_xor, test_params['W1'], test_params['b1'],
-                                          test_params['W2'], test_params['b2'])
-
-# Backward pass to get gradients
-test_grads = backward_propagation(y_xor, cache_test, test_params['W1'], test_params['b1'],
-                                  test_params['W2'], test_params['b2'])
-
-# Check gradients
-difference = gradient_check(X_xor, y_xor, test_params, test_grads)
+# Check gradients (function will compute both forward and backward internally)
+# Use copy to avoid modifying original parameters
+import copy
+test_params_copy = copy.deepcopy(test_params)
+difference = gradient_check(X_xor, y_xor, test_params_copy, None)
 
 print(f"Relative difference: {difference:.2e}")
 print()

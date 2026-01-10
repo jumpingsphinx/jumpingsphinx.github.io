@@ -1658,9 +1658,24 @@ def gradient_check(nn, X, Y, epsilon=1e-7):
 
             numerical_grads.append(num_grad_W.ravel())
 
-            # Numerical gradient for b (similar)
+            # Numerical gradient for b
             num_grad_b = np.zeros_like(layer.b)
-            # ... (similar to W)
+            it = np.nditer(layer.b, flags=['multi_index'])
+
+            while not it.finished:
+                idx = it.multi_index
+                old_val = layer.b[idx]
+
+                layer.b[idx] = old_val + epsilon
+                loss_plus = nn.loss_fn.compute(nn.forward(X), Y)
+
+                layer.b[idx] = old_val - epsilon
+                loss_minus = nn.loss_fn.compute(nn.forward(X), Y)
+
+                num_grad_b[idx] = (loss_plus - loss_minus) / (2 * epsilon)
+                layer.b[idx] = old_val
+                it.iternext()
+
             numerical_grads.append(num_grad_b.ravel())
 
     # Concatenate all gradients
