@@ -52,6 +52,8 @@ Each exercise notebook contains:
 
 <a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/exercise1-decision-trees.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/solutions/solution_exercise1-decision-trees.ipynb" target="_blank">Open Solution in Colab</a>
+
 ---
 
 ### Exercise 2: Tree Algorithms (2-3 hours)
@@ -76,6 +78,8 @@ Each exercise notebook contains:
 - Handle missing values in tree construction
 
 <a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/exercise2-tree-algorithms.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/solutions/solution_exercise2-tree-algorithms.ipynb" target="_blank">Open Solution in Colab</a>
 
 ---
 
@@ -104,6 +108,8 @@ Each exercise notebook contains:
 
 <a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/exercise3-random-forest.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/solutions/solution_exercise3-random-forest.ipynb" target="_blank">Open Solution in Colab</a>
+
 ---
 
 ### Exercise 4: Boosting (3-4 hours)
@@ -130,6 +136,8 @@ Each exercise notebook contains:
 - Tune boosting hyperparameters
 
 <a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/exercise4-boosting.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/solutions/solution_exercise4-boosting.ipynb" target="_blank">Open Solution in Colab</a>
 
 ---
 
@@ -159,6 +167,8 @@ Each exercise notebook contains:
 - Build a complete ML pipeline
 
 <a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/exercise5-xgboost.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module3-trees/solutions/solution_exercise5-xgboost.ipynb" target="_blank">Open Solution in Colab</a>
 
 ---
 

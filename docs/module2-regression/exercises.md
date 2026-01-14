@@ -46,6 +46,8 @@ Each exercise includes:
 
 <a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module2-regression/exercise1-linear-regression.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module2-regression/solutions/solution_exercise1-linear-regression.ipynb" target="_blank">Open Solution in Colab</a>
+
 **Time:** 2-3 hours
 
 ### What You'll Learn
@@ -94,6 +96,8 @@ sklearn.metrics.mean_squared_error, r2_score
 
 <a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module2-regression/exercise2-gradient-descent.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module2-regression/solutions/solution_exercise2-gradient-descent.ipynb" target="_blank">Open Solution in Colab</a>
+
 **Time:** 2-3 hours
 
 ### What You'll Learn
@@ -136,6 +140,8 @@ sklearn.metrics.mean_squared_error, r2_score
 ## Exercise 3: Logistic Regression for Classification
 
 <a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module2-regression/exercise3-logistic-regression.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module2-regression/solutions/solution_exercise3-logistic-regression.ipynb" target="_blank">Open Solution in Colab</a>
 
 **Time:** 2-3 hours
 
@@ -186,6 +192,8 @@ sklearn.metrics.classification_report
 ## Exercise 4: Regularization Techniques
 
 <a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module2-regression/exercise4-regularization.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module2-regression/solutions/solution_exercise4-regularization.ipynb" target="_blank">Open Solution in Colab</a>
 
 **Time:** 2-3 hours
 
@@ -248,11 +256,10 @@ After completing each exercise, review the solutions to:
 - Understand best practices
 - Debug any issues
 
-!!! info "Solutions Coming Soon"
-    Solution notebooks will be added soon. Work through the exercises independently first!
-
-!!! warning "Use Solutions Wisely"
-    Try to complete exercises independently first. Looking at solutions too early prevents deep learning. Use them for verification and learning alternative approaches.
+!!! tip "Learning with Solutions"
+    Compare your approach with the reference solution. Did you implement it differently? Is one way more efficient or readable?
+    
+    If you get stuck, look at the solution for a specific part, then try to continue without looking.
 
 ## Assessment Questions
 

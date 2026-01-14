@@ -47,6 +47,8 @@ Each exercise includes:
 
 <a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise1-perceptron.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/solutions/solution_exercise1-perceptron.ipynb" target="_blank">Open Solution in Colab</a>
+
 **Time:** 1.5-2 hours
 
 ### What You'll Learn
@@ -95,6 +97,8 @@ Each exercise includes:
 
 <a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise2-feedforward-networks.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/solutions/solution_exercise2-feedforward-networks.ipynb" target="_blank">Open Solution in Colab</a>
+
 **Time:** 2-3 hours
 
 ### What You'll Learn
@@ -137,6 +141,8 @@ Each exercise includes:
 ## Exercise 3: Backpropagation
 
 <a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise3-backpropagation.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/solutions/solution_exercise3-backpropagation.ipynb" target="_blank">Open Solution in Colab</a>
 
 **Time:** 3-4 hours
 
@@ -182,6 +188,8 @@ Each exercise includes:
 
 <a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise4-numpy-implementation.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/solutions/solution_exercise4-numpy-implementation.ipynb" target="_blank">Open Solution in Colab</a>
+
 **Time:** 3-4 hours
 
 ### What You'll Learn
@@ -225,6 +233,8 @@ Each exercise includes:
 
 <a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise5-pytorch-basics.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/solutions/solution_exercise5-pytorch-basics.ipynb" target="_blank">Open Solution in Colab</a>
+
 **Time:** 2-3 hours
 
 ### What You'll Learn
@@ -261,6 +271,8 @@ Each exercise includes:
 ## Exercise 6: PyTorch Advanced Topics
 
 <a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/exercise6-pytorch-advanced.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+<a href="https://colab.research.google.com/github/jumpingsphinx/jumpingsphinx.github.io/blob/main/notebooks/module4-neural-networks/solutions/solution_exercise6-pytorch-advanced.ipynb" target="_blank">Open Solution in Colab</a>
 
 **Time:** 3-4 hours
 
@@ -303,11 +315,10 @@ After completing each exercise, review the solutions to:
 - Understand best practices
 - Debug any issues
 
-!!! info "Solutions Coming Soon"
-    Solution notebooks will be added soon. Work through the exercises independently first!
-
-!!! warning "Use Solutions Wisely"
-    Try to complete exercises independently first. Looking at solutions too early prevents deep learning. Use them for verification and learning alternative approaches.
+!!! tip "Learning with Solutions"
+    Compare your approach with the reference solution. Did you implement it differently? Is one way more efficient or readable?
+    
+    If you get stuck, look at the solution for a specific part, then try to continue without looking.
 
 ## Assessment Questions
 

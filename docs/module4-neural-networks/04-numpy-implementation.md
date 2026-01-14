@@ -1082,13 +1082,17 @@ class BinaryCrossEntropy(Loss):
 
     def gradient(self, Y_pred, Y_true):
         """
-        For binary cross-entropy with sigmoid:
-        dL/dA = (A - Y) / [A(1-A)]
+        Compute gradient of loss w.r.t. predictions.
 
-        But when combined with sigmoid activation,
-        this simplifies to just: A - Y
+        dL/dA = (A - Y) / [A(1-A)]
         """
-        return Y_pred - Y_true
+        # We need to return dL/dA, because the Sigmoid activation's backward()
+        # will multiply by dA/dZ (which is A*(1-A)) to get dL/dZ = A - Y.
+        #
+        # For numerical stability, we clip values to avoid division by zero.
+        epsilon = 1e-15
+        Y_pred = np.clip(Y_pred, epsilon, 1 - epsilon)
+        return (Y_pred - Y_true) / (Y_pred * (1 - Y_pred))
 
 class CategoricalCrossEntropy(Loss):
     """Categorical cross-entropy for multi-class classification."""
